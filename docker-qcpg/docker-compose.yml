@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    image: carlosgpal02/cpg-image:1.0
+    container_name: cpg-container
+    volumes:
+      - type: bind
+        source: ../backend-qcpg/src/main/resources/qcpg/code
+        target: /app/code
+    depends_on:
+      - neo4j
+    command: tail -f /dev/null
+
+  neo4j:
+    image: neo4j:5.16.0-community-bullseye
+    container_name: neo4j-container
+    environment:
+      NEO4J_AUTH: neo4j/default1 # Password must be 8+ characters
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ../backend-qcpg/src/main/resources/qcpg/neo4j/data:/data
+      - ../backend-qcpg/src/main/resources/qcpg/neo4j/logs:/logs
+      - ../backend-qcpg/src/main/resources/qcpg/neo4j/import:/var/lib/neo4j/import
+      - ../backend-qcpg/src/main/resources/qcpg/neo4j/plugins:/plugins
