@@ -1,0 +1,13 @@
+.dsc-footer {
+  height: calc(60px - 1rem);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  background: lightskyblue;
+  text-align: center;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-weight: 500;
+  color: black;
+}

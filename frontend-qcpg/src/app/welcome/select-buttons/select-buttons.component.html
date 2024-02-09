@@ -1,0 +1,16 @@
+<div class="button-container">
+    <button class="button">Inserta Neo4j</button>
+    <div class="button-container-continue">
+        <button class="button-continue" (click)="goToAnalysis()">Analizar ></button>
+    </div>
+
+    <label for="file-upload" class="button">Selecciona archivo/s</label>
+    <input id="file-upload" type="file" style="display: none;" (change)="onFileSelect($event)" multiple />
+
+    <ul>
+      <li *ngFor="let file of selectedFiles; let i = index">
+        {{ file.name }}
+        <button (click)="removeFile(i)">X</button>
+      </li>
+    </ul>
+</div>

@@ -1,0 +1,23 @@
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 2rem;
+}
+
+.text-content {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.video-content {
+  display: flex;
+  width: 50%;
+  justify-content: left;
+  align-items: center;
+  padding: 2rem;
+}

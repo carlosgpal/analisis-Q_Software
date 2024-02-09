@@ -1,0 +1,46 @@
+.analysis-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.metrics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 300px;
+}
+
+.graph-container {
+  background-color: #d3d3d3;
+  width: 600px;
+  height: 600px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+}
+
+.metric-card {
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.metric-title,
+.metric-value {
+  margin: 0;
+}
+
+.save-analysis-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}

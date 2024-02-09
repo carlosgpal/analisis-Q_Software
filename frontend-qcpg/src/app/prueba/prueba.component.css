@@ -1,0 +1,27 @@
+.espacio1 {
+  background: white;
+  height: 100%;
+  width: 100%;
+}
+
+.espacio2 {
+  background: yellow;
+  height: 100%;
+  width: 100%;
+}
+
+.espacio3 {
+  background: green;
+  height: 100%;
+  width: 100%;
+}
+
+.e1y2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.context-component {
+  height: 100%;
+  width: 100%;
+}

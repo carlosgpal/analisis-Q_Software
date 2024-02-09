@@ -1,0 +1,8 @@
+.graph-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-top: 16px;
+  height: 300px; /* Ajusta a las dimensiones de tu gráfico */
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
