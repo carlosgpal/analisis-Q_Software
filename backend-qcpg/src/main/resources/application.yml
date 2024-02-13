@@ -1,0 +1,9 @@
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    username: neo4j
+    password: default1
+
+custom:
+  cpg:
+    url: http://localhost:3333
