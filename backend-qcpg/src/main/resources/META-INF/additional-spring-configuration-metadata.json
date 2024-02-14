@@ -1,15 +1,5 @@
 {"properties": [
   {
-    "name": "spring.neo4j.username",
-    "type": "java.lang.String",
-    "description": "Username of the neo4j database"
-  },
-  {
-    "name": "spring.neo4j.password",
-    "type": "java.lang.String",
-    "description": "Password of the neo4j database"
-  },
-  {
     "name": "custom.cpg.url",
     "type": "java.lang.String",
     "description": "Data for connection of the cpg algorithm"

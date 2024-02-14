@@ -10,7 +10,7 @@ This tutorial guides you through the process of building a Docker container that
 
 1. **(Optional) Configure Docker Compose**:
 
-   - Open the `docker-compose.yml` file.
+   - Open the [docker-compose.yml](./docker-compose.yml) file.
    - Set your username and password. If not set, the default credentials will be:
      - **Username**: `neo4j`
      - **Password**: `default1`
