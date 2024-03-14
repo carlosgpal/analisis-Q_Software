@@ -1,0 +1,26 @@
+.graph-container {
+  width: 1000px;
+  height: 600px;
+  display: block;
+  border: black 1px solid;
+}
+
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  fill: #42a5f5;
+  stroke: #1e88e5;
+  stroke-width: 1.5px;
+}
+
+.popup {
+  position: absolute;
+  padding: 10px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: none;
+}

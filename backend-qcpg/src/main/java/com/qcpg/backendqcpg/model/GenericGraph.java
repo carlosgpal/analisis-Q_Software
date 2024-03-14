@@ -1,4 +1,4 @@
-package com.qcpg.backendqcpg.dto;
+package com.qcpg.backendqcpg.model;
 
 import java.util.List;
 
@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenericNodeDTO {
-
-    private String id;
-
-    private String name;
-
-    private List<String> labels;
-
+public class GenericGraph {
+    private List<GenericNode> nodes;
+    private List<GenericRelationship> edges;
 }

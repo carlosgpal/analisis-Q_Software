@@ -13,13 +13,23 @@ public class Neo4jController {
     @Autowired
     private Neo4jService neo4jService;
 
-    @GetMapping("/nodes/{id}")
-    public ResponseEntity<?> getNode(@PathVariable Long id) {
-        return ResponseEntity.ok(neo4jService.getNodePropertiesById(id));
+    @GetMapping("/entireGraph")
+    public ResponseEntity<?> getEntireGraph() {
+        return ResponseEntity.ok(neo4jService.getGraph());
     }
 
-    @GetMapping("/nodes")
-    public ResponseEntity<?> getAllNodes() {
-        return ResponseEntity.ok(neo4jService.getAllNodes());
+    @GetMapping("/ast")
+    public ResponseEntity<?> getAstGraph() {
+        return ResponseEntity.ok(neo4jService.getGraph());
+    }
+
+    @GetMapping("/cfg")
+    public ResponseEntity<?> getCfgGraph() {
+        return ResponseEntity.ok(neo4jService.getGraph());
+    }
+
+    @GetMapping("/pdg")
+    public ResponseEntity<?> getPdgGraph() {
+        return ResponseEntity.ok(neo4jService.getGraph());
     }
 }

@@ -1,5 +1,7 @@
 package com.qcpg.backendqcpg.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenericRelationshipDTO {
-    private String id;
-
-    private String type;
-
-    private String source;
-
-    private String target;
+public class GenericGraphDTO {
+    List<GenericNodeDTO> nodes;
+    List<GenericRelationshipDTO> edges;
 }
