@@ -1,4 +1,8 @@
 <div class="button-container">
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
   <div class="button-container-continue">
     <button class="button-continue" (click)="goToAnalysis()">Analizar ></button>
   </div>

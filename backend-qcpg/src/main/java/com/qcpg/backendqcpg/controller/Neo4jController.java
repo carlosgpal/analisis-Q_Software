@@ -20,16 +20,16 @@ public class Neo4jController {
 
     @GetMapping("/ast")
     public ResponseEntity<?> getAstGraph() {
-        return ResponseEntity.ok(neo4jService.getGraph());
+        return ResponseEntity.ok(neo4jService.getAst());
     }
 
     @GetMapping("/cfg")
     public ResponseEntity<?> getCfgGraph() {
-        return ResponseEntity.ok(neo4jService.getGraph());
+        return ResponseEntity.ok(neo4jService.getCfg());
     }
 
     @GetMapping("/pdg")
     public ResponseEntity<?> getPdgGraph() {
-        return ResponseEntity.ok(neo4jService.getGraph());
+        return ResponseEntity.ok(neo4jService.getPdg());
     }
 }

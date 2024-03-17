@@ -3,5 +3,10 @@
     "name": "custom.cpg.url",
     "type": "java.lang.String",
     "description": "Data for connection of the cpg algorithm"
+  },
+  {
+    "name": "custom.cpg.volumes",
+    "type": "java.lang.String",
+    "description": "Dinamic file route for the cpg volume"
   }
 ]}
