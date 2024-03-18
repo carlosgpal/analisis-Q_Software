@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angula
 import { ApiCallsService } from '@app/shared/services/apicalls.service';
 import * as d3 from 'd3';
 import { CommonModule } from '@angular/common';
-import { Graph, Node, Link, GraphCache } from '@app/models/graph.models';
+import { Graph, Node, Link } from '@app/models/graph.models';
 import { GraphControlsComponent } from '../graph-controls/graph-controls.component';
 import { GraphCommunicationService } from '@app/shared/services/communication.service';
 
@@ -57,16 +57,54 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.createGraph(graphData);
   }
 
+
   createGraph(graphData: Graph): void {
     d3.select(this.graphContainer.nativeElement).select('svg').remove();
 
     const element = this.graphContainer.nativeElement;
+    let currentTransform = d3.zoomIdentity;
+
     this.width = element.clientWidth;
     this.height = element.clientHeight;
 
     const svg = d3.select(element).append('svg')
       .attr('width', this.width)
-      .attr('height', this.height);
+      .attr('height', this.height)
+      .append('g');
+
+    const zoomHandler = d3.zoom()
+      .scaleExtent([0.1, 10])
+      .on("zoom", zoomed)
+
+    d3.select(element).select('svg')
+      .call(zoomHandler as any)
+      .on("wheel.zoom", null)
+      .on("wheel", function (event) {
+        manualZoom(event);
+      }, { passive: false });
+
+    function manualZoom(event: { preventDefault: () => void; deltaY: number; }) {
+      event.preventDefault();
+      const zoomSensitivity = 0.001;
+      let deltaY = event.deltaY * -zoomSensitivity;
+
+      const [mouseX, mouseY] = d3.pointer(event, svg.node());
+
+      let newZoom = currentTransform.k * (1 + deltaY);
+      newZoom = Math.max(zoomHandler.scaleExtent()[0], Math.min(newZoom, zoomHandler.scaleExtent()[1]));
+
+      const xt = mouseX - (mouseX - currentTransform.x) * (newZoom / currentTransform.k);
+      const yt = mouseY - (mouseY - currentTransform.y) * (newZoom / currentTransform.k);
+
+      currentTransform = d3.zoomIdentity.translate(xt, yt).scale(newZoom);
+
+      svg.attr('transform', currentTransform as any);
+    }
+
+    function zoomed(event: { transform: any; }) {
+      currentTransform = event.transform;
+      svg.attr('transform', currentTransform as any);
+    }
 
     const simulation = d3.forceSimulation<Node, Link>(graphData.nodes)
       .force("link", d3.forceLink<Node, Link>(graphData.edges).id(d => d.id))
@@ -113,8 +151,6 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
         d.fy = event.y;
       }));
 
-    const nodeRadius = 20;
-
     const drag = d3.drag<SVGCircleElement, Node>()
       .on("start", (event, d) => {
         if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -122,8 +158,8 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
         d.fy = d.y;
       })
       .on("drag", (event, d) => {
-        d.fx = Math.max(nodeRadius, Math.min(this.width ? this.width - nodeRadius : 0, event.x));
-        d.fy = Math.max(nodeRadius, Math.min(this.height ?? 0 - nodeRadius, event.y));
+        d.fx = event.x;
+        d.fy = event.y;
       })
       .on("end", (event, d) => {
         if (!event.active) simulation.alphaTarget(0);

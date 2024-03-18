@@ -15,6 +15,8 @@ public class GenericNodeDTO {
 
     private String name;
 
+    private String file;
+
     private List<String> labels;
 
 }

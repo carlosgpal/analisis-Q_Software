@@ -22,6 +22,9 @@ public class GenericNode {
     @Property("fullName")
     private String fullName;
 
+    @Property("file")
+    private String file;
+
     @Property("labels")
     private List<String> labels;
 

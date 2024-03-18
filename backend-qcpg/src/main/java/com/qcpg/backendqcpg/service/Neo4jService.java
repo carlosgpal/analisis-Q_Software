@@ -25,7 +25,10 @@ public class Neo4jService {
 
     public GenericGraphDTO getGraph() {
         List<GenericNode> nodes = nodeRepository.getAllNodes();
-        List<GenericRelationship> edges = nodeRepository.getAllRelationships();
+        List<Long> nodeIds = nodes.stream()
+                .map(GenericNode::getId)
+                .collect(Collectors.toList());
+        List<GenericRelationship> edges = nodeRepository.getAllRelationships(nodeIds);
 
         List<GenericNodeDTO> nodeDTOs = nodes.stream()
                 .map(node -> modelMapper.map(node, GenericNodeDTO.class))
@@ -45,7 +48,10 @@ public class Neo4jService {
 
     public GenericGraphDTO getAst() {
         List<GenericNode> nodes = nodeRepository.getAstNodes();
-        List<GenericRelationship> edges = nodeRepository.getAstRelationships();
+        List<Long> nodeIds = nodes.stream()
+                .map(GenericNode::getId)
+                .collect(Collectors.toList());
+        List<GenericRelationship> edges = nodeRepository.getAstRelationships(nodeIds);
 
         List<GenericNodeDTO> nodeDTOs = nodes.stream()
                 .map(node -> modelMapper.map(node, GenericNodeDTO.class))
@@ -65,7 +71,10 @@ public class Neo4jService {
 
     public GenericGraphDTO getCfg() {
         List<GenericNode> nodes = nodeRepository.getCfgNodes();
-        List<GenericRelationship> edges = nodeRepository.getCfgRelationships();
+        List<Long> nodeIds = nodes.stream()
+                .map(GenericNode::getId)
+                .collect(Collectors.toList());
+        List<GenericRelationship> edges = nodeRepository.getCfgRelationships(nodeIds);
 
         List<GenericNodeDTO> nodeDTOs = nodes.stream()
                 .map(node -> modelMapper.map(node, GenericNodeDTO.class))
@@ -85,7 +94,10 @@ public class Neo4jService {
 
     public GenericGraphDTO getPdg() {
         List<GenericNode> nodes = nodeRepository.getPdgNodes();
-        List<GenericRelationship> edges = nodeRepository.getPdgRelationships();
+        List<Long> nodeIds = nodes.stream()
+                .map(GenericNode::getId)
+                .collect(Collectors.toList());
+        List<GenericRelationship> edges = nodeRepository.getPdgRelationships(nodeIds);
 
         List<GenericNodeDTO> nodeDTOs = nodes.stream()
                 .map(node -> modelMapper.map(node, GenericNodeDTO.class))
