@@ -1,25 +1,36 @@
-<div class="button-container">
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
+<div class="content-wrapper">
+  <div class="buttons-error-container">
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="button-wrapper">
+      <div class="select-area">
+        <label for="file-upload" class="button-container-select"
+          >Selecciona archivo/s</label
+        >
+        <input
+          id="file-upload"
+          type="file"
+          style="display: none"
+          (change)="onFileSelect($event)"
+          multiple
+        />
+        <ul>
+          <li *ngFor="let file of selectedFiles; let i = index">
+            {{ file.name }}
+            <button class="file-remove-button" (click)="removeFile(i)">
+              X
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="analyze-area">
+        <button class="button-continue" (click)="goToAnalysis()">
+          Analizar
+        </button>
+      </div>
+    </div>
   </div>
-
-  <div class="button-container-continue">
-    <button class="button-continue" (click)="goToAnalysis()">Analizar ></button>
-  </div>
-
-  <label for="file-upload" class="button">Selecciona archivo/s</label>
-  <input
-    id="file-upload"
-    type="file"
-    style="display: none"
-    (change)="onFileSelect($event)"
-    multiple
-  />
-
-  <ul>
-    <li *ngFor="let file of selectedFiles; let i = index">
-      {{ file.name }}
-      <button (click)="removeFile(i)">X</button>
-    </li>
-  </ul>
 </div>

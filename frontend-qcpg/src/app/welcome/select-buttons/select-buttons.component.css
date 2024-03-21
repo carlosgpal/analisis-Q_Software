@@ -1,43 +1,85 @@
-.button-container {
+.button-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5rem;
-  padding: 0 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  top: 70px;
 }
 
-.button {
+.select-area {
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.analyze-area {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-container-select {
+  cursor: pointer;
   height: 60px;
-  padding: 10px 20px;
   font-size: 16px;
   font-weight: 500;
   color: #fff;
-  background-color: #007bff;
+  background-color: #6f42c1;
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
   transition: all 0.3s ease;
-  margin: 0 150px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  padding: 10px 20px;
 }
 
-.button:hover {
+ul {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.button-continue {
+  font-size: 18px;
+  font-weight: 600;
+  color: #495057;
+  background-color: #fff;
+  border: 2px solid #6f42c1;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 10px 20px;
+}
+
+.button-container-select:hover {
   background-color: #0056b3;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.button:active {
+.button-container-select:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.button-container-select:focus {
+  outline: none;
 }
 
 .button-container-continue {
   display: flex;
-  padding: 0 20px;
 }
 
 .button-continue {
   display: inline-block;
-  padding: 10px 25px;
   font-size: 18px;
   font-weight: 600;
   color: #4caf50;
@@ -46,7 +88,6 @@
   border-radius: 0.3rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  margin-top: 150px;
 }
 
 .button-continue:hover {
@@ -61,10 +102,52 @@
 
 .button-continue:focus {
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.5);
+}
+
+.buttons-error-container {
+  position: relative;
+  padding: 20px;
+  text-align: center;
 }
 
 .error-message {
   color: #ff0000;
-  margin: 10px 0;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: auto;
+  padding-top: 50px;
+}
+
+.file-remove-button {
+  cursor: pointer;
+  background-color: #6f42c1;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.file-remove-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.file-remove-button:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.file-remove-button:focus {
+  outline: none;
 }

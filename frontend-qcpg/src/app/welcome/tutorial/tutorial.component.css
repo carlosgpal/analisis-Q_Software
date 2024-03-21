@@ -1,23 +1,40 @@
 .content-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  padding: 20px 15%;
+}
+
+.tutorial-content {
+  display: flex;
   flex-direction: row;
-  padding: 2rem;
+  padding: 30px;
+  border-bottom: 1.5px solid black;
 }
 
 .text-content {
   display: flex;
-  width: 50%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  width: 50%;
+  text-align: justify;
+  padding-right: 30px;
+  border-right: 1.5px solid black;
 }
 
 .video-content {
   display: flex;
-  width: 50%;
-  justify-content: left;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 2rem;
+  width: 50%;
+  padding-left: 30px;
+}
+
+.video {
+  max-width: 100%;
+  max-height: 100%;
 }
