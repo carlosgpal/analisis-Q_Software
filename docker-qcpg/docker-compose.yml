@@ -2,14 +2,14 @@ version: "3.8"
 services:
   app:
     build: .
-    image: carlosgpal02/cpg-image:1.0
+    image: carlosgpal02/cpg-image:2.0
     container_name: cpg-container
     ports:
       - "3333:3333"
     volumes:
       - type: bind
-        source: ../backend-qcpg/src/main/resources/qcpg/code
-        target: /app/code
+        source: ../backend-qcpg/src/main/resources/qcpg/uploads
+        target: /app/uploads
     depends_on:
       - neo4j
     command: tail -f /dev/null

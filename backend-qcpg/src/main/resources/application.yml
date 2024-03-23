@@ -8,4 +8,4 @@ spring:
 custom:
   cpg:
     url: http://localhost:3333
-    volumes: ./src/main/resources/qcpg/code
+    volumes: ./src/main/resources/qcpg/uploads

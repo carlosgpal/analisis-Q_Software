@@ -43,7 +43,7 @@ public class CpgController {
         try {
             Map<String, String> commandMap = new HashMap<>();
             commandMap.put("command", "cpg-neo4j/build/install/cpg-neo4j/bin/cpg-neo4j --host=neo4j --user=" + neo4juser
-                    + " --password=" + neo4jpass + " /app/code/" + commandRequest.getCommand());
+                    + " --password=" + neo4jpass + " /app/uploads/" + commandRequest.getCommand());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonCommand = objectMapper.writeValueAsString(commandMap);
