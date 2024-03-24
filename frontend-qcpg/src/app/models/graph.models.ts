@@ -16,6 +16,7 @@ export interface Link extends SimulationLinkDatum<Node> {
 export interface Graph {
     nodes: Node[];
     edges: Link[];
+    type: string;
 }
 
 export interface GraphCache {
