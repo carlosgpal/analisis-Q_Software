@@ -123,8 +123,8 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     });
 
     const calculateLinkArcPath = (d: Link) => {
-      const source: Node = typeof d.source === 'string' ? { id: d.source, name: '', labels: [] } : d.source;
-      const target: Node = typeof d.target === 'string' ? { id: d.target, name: '', labels: [] } : d.target;
+      const source: Node = typeof d.source === 'string' ? { id: d.source, name: '', labels: [], file: '' } : d.source;
+      const target: Node = typeof d.target === 'string' ? { id: d.target, name: '', labels: [], file: '' } : d.target;
       const sourceId = source.id;
       const targetId = target.id;
       const edgeKey = sourceId < targetId ? `${sourceId}:${targetId}` : `${targetId}:${sourceId}`;
@@ -155,8 +155,39 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .attr("id", linkPathId)
       .attr("d", calculateLinkArcPath)
       .attr("stroke-width", 2)
-      .attr("stroke", "gray")
-      .attr("fill", "none");
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.6)
+      .attr("fill", "none")
+      .on("mouseover", function (event, d) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style("stroke-opacity", 1)
+          .style("stroke-width", 4);
+        d3.selectAll('circle')
+          .filter((node: any) => {
+            const sourceNode = d.source as Node;
+            const targetNode = d.target as Node;
+            return node.id === sourceNode.id || node.id === targetNode.id;
+          })
+          .transition()
+          .duration(200)
+          .attr("r", 30)
+          .attr('stroke', 'black')
+          .attr('stroke-width', 3);
+      })
+      .on("mouseout", function () {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style("stroke-opacity", 0.6)
+          .style("stroke-width", 2);
+        d3.selectAll('circle')
+          .transition()
+          .duration(200)
+          .attr("r", 25)
+          .attr('stroke', 'none');
+      });
 
     const node = zoomGroup.append("g")
       .attr("class", "nodes")
@@ -164,7 +195,27 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .data(graphData.nodes)
       .enter().append("circle")
       .attr("r", 25)
-      .attr("fill", nodeColor);
+      .attr("fill", nodeColor)
+      .call(d3.drag<SVGCircleElement, Node>()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended))
+      .on("mouseover", function (event, d) {
+        d3.selectAll(".link").transition().duration(200)
+          .style("stroke-opacity", (o: any) => (o.source === d || o.target === d ? 1 : 0.1))
+          .style("stroke-width", (o: any) => (o.source === d || o.target === d ? 3 : 1));
+
+        d3.select(this).transition().duration(200)
+          .attr("r", 30);
+      })
+      .on("mouseout", function () {
+        d3.selectAll(".link").transition().duration(200)
+          .style("stroke-opacity", 0.6)
+          .style("stroke-width", 2);
+
+        d3.select(this).transition().duration(200)
+          .attr("r", 25);
+      });
 
     const linkText = zoomGroup.append("g")
       .selectAll("text")
@@ -192,8 +243,46 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .style("font-size", "10px")
       .style("dominant-baseline", "central")
       .style("alignment-baseline", "middle")
-      .attr("fill", "black");
-
+      .attr("fill", "black")
+      .on("mouseover", function (event, d) {
+        const sourceNode = d.source as Node;
+        const targetNode = d.target as Node;
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style("font-weight", "bold");
+        d3.select(`#link-path-${sourceNode.id}-${targetNode.id}`)
+          .transition()
+          .duration(200)
+          .style("stroke-opacity", 1)
+          .style("stroke-width", 4);
+        d3.selectAll<SVGCircleElement, Node>('circle')
+          .filter(node => node.id === sourceNode.id || node.id === targetNode.id)
+          .transition()
+          .duration(200)
+          .attr("r", 30)
+          .attr('stroke', 'black')
+          .attr('stroke-width', 3);
+      })
+      .on("mouseout", function (event, d) {
+        const sourceNode = d.source as Node;
+        const targetNode = d.target as Node;
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style("font-weight", "normal");
+        d3.select(`#link-path-${sourceNode.id}-${targetNode.id}`)
+          .transition()
+          .duration(200)
+          .style("stroke-opacity", 0.6)
+          .style("stroke-width", 2);
+        d3.selectAll<SVGCircleElement, Node>('circle')
+          .filter(node => node.id === sourceNode.id || node.id === targetNode.id)
+          .transition()
+          .duration(200)
+          .attr("r", 25)
+          .attr('stroke', 'none');
+      });
 
     const labels = zoomGroup.append("g")
       .selectAll("text")
@@ -203,7 +292,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .text(d => d.name)
       .each(function (d) {
         const textElement = d3.select(this);
-        const maxLength = 75;
+        const maxLength = 72;
         let textLength = textElement.node()?.getComputedTextLength();
         let text = d.name;
         while (textLength && textLength > maxLength && text.length > 0) {
@@ -219,6 +308,8 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .style("text-overflow", "ellipsis")
       .style("white-space", "nowrap")
       .style("font-size", "10px")
+      .style("font-weight", "bold")
+      .style("pointer-events", "none")
       .style("dominant-baseline", "central")
       .style("alignment-baseline", "middle")
       .attr("fill", "white");
@@ -279,11 +370,11 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     );
 
     node.on("dblclick", (event, d) => {
-      this.showPopup('node', `Name: ${d.name}<br>Labels: ${d.labels.join(', ')}`, event.pageX, event.pageY);
+      this.showPopup('node', `<strong>Nombre:</strong> ${d.name}<br><strong>Archivo:</strong> ${d.file}<br><strong>Etiquetas:</strong> ${d.labels.join(', ')}`, event.pageX, event.pageY);
     });
 
     link.on("dblclick", (event, d) => {
-      this.showPopup('link', `Type: ${d.type}`, event.pageX, event.pageY);
+      this.showPopup('link', `<strong>Tipo:</strong> ${d.type}<br><strong>Fuente:</strong> ${(d.source as Node).name}<br><strong>Destino:</strong> ${(d.target as Node).name}`, event.pageX, event.pageY);
     });
   }
 
@@ -292,9 +383,31 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     const popupContent = document.getElementById(`${type}-popup-content`);
     if (popup && popupContent) {
       popupContent.innerHTML = content;
+      popup.style.left = '-9999px';
+      popup.style.top = '-9999px';
       popup.style.display = 'block';
-      popup.style.left = `${x}px`;
-      popup.style.top = `${y}px`;
+
+      setTimeout(() => {
+        const popupWidth = popup.offsetWidth;
+        const popupHeight = popup.offsetHeight;
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let calculatedX = x;
+        let calculatedY = y;
+
+        if (x + popupWidth > viewportWidth) {
+          calculatedX = viewportWidth - popupWidth;
+        }
+
+        if (y + popupHeight > viewportHeight) {
+          calculatedY = viewportHeight - popupHeight;
+        }
+
+        popup.style.left = `${Math.max(calculatedX, 0)}px`;
+        popup.style.top = `${Math.max(calculatedY, 0)}px`;
+      }, 0);
     }
   }
 
@@ -307,10 +420,10 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
 
   getNodeColorBasedOnGraphType(graphType: string): string {
     const graphTypeToColorMap: { [type: string]: string } = {
-      'entireGraph': 'blue',
-      'ast': 'green',
-      'cfg': 'red',
-      'pdg': 'purple'
+      'entireGraph': 'darkgreen',
+      'ast': 'blue',
+      'cfg': 'purple',
+      'pdg': 'red'
     };
     return graphTypeToColorMap[graphType] || 'black';
   }

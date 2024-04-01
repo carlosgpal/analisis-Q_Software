@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class GenericGraphDTO {
     List<GenericNodeDTO> nodes;
     List<GenericRelationshipDTO> edges;
+    private String type;
 }

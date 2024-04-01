@@ -1,20 +1,11 @@
 <div #graphContainer class="graph-container"></div>
 
 <div id="node-popup" class="popup">
-  <div id="node-popup-content"></div>
-  <button (click)="hidePopup('node')">Cerrar</button>
+  <div class="popup-content" id="node-popup-content"></div>
+  <button (click)="hidePopup('node')" class="close-btn">Cerrar</button>
 </div>
 
 <div id="link-popup" class="popup">
-  <div id="link-popup-content"></div>
-  <button (click)="hidePopup('link')">Cerrar</button>
+  <div class="popup-content" id="link-popup-content"></div>
+  <button (click)="hidePopup('link')" class="close-btn">Cerrar</button>
 </div>
-
-<script>
-  function hidePopup(type) {
-    const popup = document.getElementById(`${type}-popup`);
-    if (popup) {
-      popup.style.display = "none";
-    }
-  }
-</script>
