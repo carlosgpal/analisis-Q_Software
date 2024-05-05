@@ -1,8 +1,25 @@
 <div class="analysis-container">
   <div class="metrics-container">
-    <app-metric-card title="Medida1" value="Test"></app-metric-card>
-    <app-metric-card title="Medida2" value="Test"></app-metric-card>
-    <app-metric-card title="Medida3" value="Test"></app-metric-card>
+    <app-metric-card
+      title="Número de cúbits"
+      [value]="numQubits"
+      route="/mappingBits"
+    ></app-metric-card>
+    <app-metric-card
+      title="Número de bits clásicos"
+      [value]="numClassicBits"
+      route="/mappingBits"
+    ></app-metric-card>
+    <app-metric-card
+      title="Número de puertas"
+      [value]="numGates"
+      route="/mappingGates"
+    ></app-metric-card>
+    <app-metric-card
+      title="Número de medidas"
+      [value]="numMeasures"
+      route="/mappingMeasures"
+    ></app-metric-card>
   </div>
 
   <div class="graph-container">

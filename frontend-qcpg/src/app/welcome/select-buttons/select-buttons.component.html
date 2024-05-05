@@ -1,4 +1,7 @@
 <div class="content-wrapper">
+  <div class="loading-wrapper" *ngIf="loading">
+    <mat-spinner class="custom-spinner" diameter="50"></mat-spinner>
+  </div>
   <div class="buttons-error-container">
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
@@ -17,7 +20,10 @@
           multiple
         />
         <ul>
-          <li *ngFor="let file of selectedFiles; let i = index">
+          <li
+            class="file-remove-text"
+            *ngFor="let file of selectedFiles; let i = index"
+          >
             {{ file.name }}
             <button class="file-remove-button" (click)="removeFile(i)">
               X

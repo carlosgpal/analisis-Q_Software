@@ -32,4 +32,39 @@ public class Neo4jController {
     public ResponseEntity<?> getPdgGraph() {
         return ResponseEntity.ok(neo4jService.getPdg());
     }
+
+    @GetMapping("/numQubits")
+    public ResponseEntity<?> getNumQubits() {
+        return ResponseEntity.ok(neo4jService.getNumQubits());
+    }
+
+    @GetMapping("/numClassicBits")
+    public ResponseEntity<?> getNumClassicBits() {
+        return ResponseEntity.ok(neo4jService.getNumClassicBits());
+    }
+
+    @GetMapping("/mappingBits")
+    public ResponseEntity<?> getMappingBits() {
+        return ResponseEntity.ok(neo4jService.getMappingBits());
+    }
+
+    @GetMapping("/numGates")
+    public ResponseEntity<?> getNumGates() {
+        return ResponseEntity.ok(neo4jService.getNumGates());
+    }
+
+    @GetMapping("/mappingGates")
+    public ResponseEntity<?> getMappingGates() {
+        return ResponseEntity.ok(neo4jService.getMappingGates());
+    }
+
+    @GetMapping("/numMeasures")
+    public ResponseEntity<?> getNumMeasures() {
+        return ResponseEntity.ok(neo4jService.getNumMeasures());
+    }
+
+    @GetMapping("/mappingMeasures")
+    public ResponseEntity<?> getMappingMeasures() {
+        return ResponseEntity.ok(neo4jService.getMappingMeasures());
+    }
 }

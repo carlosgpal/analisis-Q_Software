@@ -1,18 +1,39 @@
 .metric-card {
-  border: 1px solid #d3d3d3;
+  position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   padding: 16px;
   margin: 10px 0;
-  background-color: #fff;
+  background-color: rgb(42, 47, 64);
+  border: 1px solid rgb(62, 67, 87);
 }
 
 .metric-title {
-  color: #333;
+  color: rgb(189, 198, 255);
   margin-bottom: 8px;
 }
 
 .metric-value {
   font-size: 2em;
-  color: #333;
+  color: white;
+}
+
+.btn-go {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: rgb(209, 250, 223);
+  color: rgb(5, 96, 58);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-icons {
+  font-size: 24px;
 }

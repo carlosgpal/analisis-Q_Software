@@ -49,6 +49,12 @@ li {
   margin-bottom: 5px;
 }
 
+.loading-wrapper {
+  height: 0px;
+  display: flex;
+  justify-content: center;
+}
+
 .button-continue {
   font-size: 18px;
   font-weight: 600;
@@ -62,7 +68,8 @@ li {
 }
 
 .button-container-select:hover {
-  background-color: #0056b3;
+  background-color: rgb(189, 198, 255);
+  color: black;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -82,22 +89,18 @@ li {
   display: inline-block;
   font-size: 18px;
   font-weight: 600;
-  color: #4caf50;
-  background-color: #f8f9fa;
+  color: rgb(5, 96, 58);
+  background-color: rgb(209, 250, 223);
   border: 2px solid #4caf50;
   border-radius: 0.3rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.button-continue:hover {
-  background-color: #4caf50;
-  color: white;
-}
-
 .button-continue:active {
   background-color: #3e8e41;
   border-color: #3e8e41;
+  color: white;
 }
 
 .button-continue:focus {
@@ -118,7 +121,11 @@ li {
   transform: translateX(-50%);
   z-index: 10;
   width: auto;
-  padding-top: 50px;
+  padding-top: 30px;
+}
+
+.file-remove-text {
+  color: white;
 }
 
 .file-remove-button {
@@ -140,7 +147,8 @@ li {
 }
 
 .file-remove-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(189, 198, 255);
+  color: black;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 

@@ -10,7 +10,7 @@ import { FooterComponent } from './layout/footer/footer.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, SkeletonComponent, NavigationComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'frontend-qcpg';

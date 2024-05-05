@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Graph, Node, Link } from '@app/models/graph.models';
 import { GraphControlsComponent } from '../graph-controls/graph-controls.component';
 import { GraphCommunicationService } from '@app/shared/services/communication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-graph-visualization',
@@ -22,18 +23,34 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
   private zoom!: d3.ZoomBehavior<Element, unknown>;
 
   constructor(private graphCommService: GraphCommunicationService,
-    private apiCalls: ApiCallsService) { }
+    private apiCalls: ApiCallsService,
+    private router: Router) { }
 
   ngAfterViewInit(): void {
     this.initializeSVG();
-    this.loadGraph('entireGraph');
+
+    const url = this.router.url;
+    let graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures';
+
+    if (url.includes('/mappingBits')) {
+      graphType = 'mappingBits';
+    } else if (url.includes('/mappingGates')) {
+      graphType = 'mappingGates';
+    } else if (url.includes('/mappingMeasures')) {
+      graphType = 'mappingMeasures';
+    }
+    else {
+      graphType = 'entireGraph';
+    }
+
+    this.loadGraph(graphType);
   }
 
   ngOnInit(): void {
     this.initializeZoom();
     this.graphCommService.graphType$.subscribe({
       next: (graphType) => {
-        if (graphType === 'entireGraph' || graphType === 'ast' || graphType === 'cfg' || graphType === 'pdg') {
+        if (graphType === 'entireGraph' || graphType === 'ast' || graphType === 'cfg' || graphType === 'pdg' || graphType === 'mappingBits' || graphType === 'mappingGates' || graphType === 'mappingMeasures') {
           this.loadGraph(graphType);
         } else {
           console.error('Tipo de grafo no válido:', graphType);
@@ -54,8 +71,8 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.height = this.graphContainer.nativeElement.clientHeight;
     this.svg = d3.select(this.graphContainer.nativeElement)
       .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
+      .attr('width', "100%")
+      .attr('height', "100%")
       .call(this.zoom as any)
       .on("dblclick.zoom", null);
 
@@ -72,7 +89,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.svg.select('g').attr('transform', event.transform.toString());
   }
 
-  loadGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg'): void {
+  loadGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures'): void {
     if (this.graphDataCache[graphType]) {
       this.createGraph(this.graphDataCache[graphType]);
     } else {
@@ -96,11 +113,10 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     const element = this.graphContainer.nativeElement;
     this.width = element.clientWidth;
     this.height = element.clientHeight;
-    const nodeColor = this.getNodeColorBasedOnGraphType(graphData.type);
 
     const simulation = d3.forceSimulation<Node, Link>(graphData.nodes)
       .force("link", d3.forceLink<Node, Link>(graphData.edges).id(d => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-200))
+      .force("charge", d3.forceManyBody().strength(-100))
       .force("center", d3.forceCenter(this.width / 2, this.height / 2))
       .force("collision", d3.forceCollide().radius(40).strength(1));
 
@@ -195,7 +211,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .data(graphData.nodes)
       .enter().append("circle")
       .attr("r", 25)
-      .attr("fill", nodeColor)
+      .attr("fill", d => this.getNodeColorByLabel(d))
       .call(d3.drag<SVGCircleElement, Node>()
         .on("start", dragstarted)
         .on("drag", dragged)
@@ -243,7 +259,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       .style("font-size", "10px")
       .style("dominant-baseline", "central")
       .style("alignment-baseline", "middle")
-      .attr("fill", "black")
+      .attr("fill", "lightgray")
       .on("mouseover", function (event, d) {
         const sourceNode = d.source as Node;
         const targetNode = d.target as Node;
@@ -418,13 +434,24 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getNodeColorBasedOnGraphType(graphType: string): string {
-    const graphTypeToColorMap: { [type: string]: string } = {
-      'entireGraph': 'darkgreen',
-      'ast': 'blue',
-      'cfg': 'purple',
-      'pdg': 'red'
-    };
-    return graphTypeToColorMap[graphType] || 'black';
+  labelToColorMap: { [label: string]: string } = {
+    'ClassicBitReference': '#ffc454',
+    'QuantumBit': '#f16667',
+    'QuantumGate': '#f79767',
+    'ParameterDeclaration': '#569480',
+    'Declaration': '#da7194',
+    'CallExpression': '#604a0e',
+    'Statement': '#57c7e3'
+  };
+
+  getNodeColorByLabel(node: Node): string {
+    const labelPriority = ['ClassicBitReference', 'QuantumBit', 'QuantumGate', 'ParameterDeclaration', 'Declaration', 'CallExpression', 'Statement'];
+    const nodeLabels = node.labels || [];
+    for (let label of labelPriority) {
+      if (nodeLabels.includes(label)) {
+        return this.labelToColorMap[label];
+      }
+    }
+    return 'black';
   }
 }

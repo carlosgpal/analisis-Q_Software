@@ -5,7 +5,7 @@
   height: 60px;
   padding-right: 5px;
   overflow: hidden;
-  background-color: darkslateblue;
+  background-color: rgb(18, 20, 29);
   border-bottom: 1px solid rgba(0, 0, 0, 0.195);
   align-items: center;
 }

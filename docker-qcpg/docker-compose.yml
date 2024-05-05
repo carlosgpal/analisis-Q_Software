@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app:
     build: .
-    image: carlosgpal02/cpg-image:2.0
+    image: carlosgpal02/cpg-image:3.0
     container_name: cpg-container
     ports:
       - "3333:3333"

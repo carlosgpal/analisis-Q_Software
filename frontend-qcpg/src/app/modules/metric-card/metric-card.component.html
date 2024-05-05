@@ -1,4 +1,9 @@
 <div class="metric-card">
-    <h3 class="metric-title">{{ title }}</h3>
-    <p class="metric-value">{{ value }}</p>
+  <h3 class="metric-title">{{ title }}</h3>
+  <p class="metric-value">{{ value }}</p>
+  <div *ngIf="value !== '0' && title !== 'Número de cúbits'">
+    <a [routerLink]="route" class="btn-go" aria-label="Go"
+      ><i class="material-icons">arrow_forward</i></a
+    >
+  </div>
 </div>

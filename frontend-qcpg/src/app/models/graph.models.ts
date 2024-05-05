@@ -25,4 +25,7 @@ export interface GraphCache {
     ast?: Graph;
     cfg?: Graph;
     pdg?: Graph;
+    mappingBits?: Graph;
+    mappingGates?: Graph;
+    mappingMeasures?: Graph;
 }

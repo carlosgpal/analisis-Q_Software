@@ -10,7 +10,7 @@ export class ApiCallsService {
 
   constructor(private http: HttpClient) { }
 
-  getGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg'): Observable<any> {
+  getGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures'): Observable<any> {
     return this.http.get(`${this.baseUrl}/neo4j/${graphType}`);
   }
 
@@ -20,5 +20,21 @@ export class ApiCallsService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       responseType: 'text'
     });
+  }
+
+  getNumQubits() {
+    return this.http.get(`${this.baseUrl}/neo4j/numQubits`);
+  }
+
+  getNumClassicBits() {
+    return this.http.get(`${this.baseUrl}/neo4j/numClassicBits`);
+  }
+
+  getNumGates() {
+    return this.http.get(`${this.baseUrl}/neo4j/numGates`);
+  }
+
+  getNumMeasures() {
+    return this.http.get(`${this.baseUrl}/neo4j/numMeasures`);
   }
 }

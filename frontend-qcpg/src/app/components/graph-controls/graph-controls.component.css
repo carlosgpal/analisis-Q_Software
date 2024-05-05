@@ -6,8 +6,8 @@
 }
 
 .graph-controls button {
-  background-color: #007bff;
-  border: none;
+  background-color: rgb(57, 62, 78);
+  border: 1px solid rgb(107, 111, 129);
   color: white;
   cursor: pointer;
   padding: 10px 20px;
@@ -18,7 +18,9 @@
 }
 
 .graph-controls button:hover {
-  background-color: #0056b3;
+  background-color: rgb(189, 198, 255);
+  color: black;
+  border: 1px solid rgb(255, 255, 255);
   transform: scale(1.05);
 }
 

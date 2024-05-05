@@ -1,12 +1,14 @@
 .graph-container {
-  width: 1000px;
-  height: 600px;
+  width: 77.5vw;
+  height: 75vh;
   display: block;
-  border: black 1px solid;
+  border-left: 1px solid rgb(62, 67, 87);
+  border-right: 1px solid rgb(62, 67, 87);
+  border-bottom: 1px solid rgb(62, 67, 87);
 }
 
 .links line {
-  stroke: #999;
+  stroke: white;
   stroke-opacity: 0.6;
 }
 

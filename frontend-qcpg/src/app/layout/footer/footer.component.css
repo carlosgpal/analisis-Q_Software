@@ -1,7 +1,8 @@
 .dsc-footer {
   height: 20px;
   text-align: center;
-  background: lightskyblue;
+  color: rgb(166, 173, 194);
+  background-color: rgb(42, 47, 64);
   font-size: 12px;
   justify-content: center;
   display: flex;
