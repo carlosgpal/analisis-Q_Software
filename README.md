@@ -11,7 +11,7 @@ Instructions are specified in [tutorial.md](./docker-qcpg/tutorial.md).
   Execute the following command:
 
   ```shell
-      mvn clean install
+  mvn clean install
   ```
 
 - If the Neo4j user and password are changed from step 1, you must change it too in [application.yml](./backend-qcpg/src/main/resources/application.yml).
@@ -20,16 +20,14 @@ Instructions are specified in [tutorial.md](./docker-qcpg/tutorial.md).
 
 ## 3. Frontend
 
-**# TODO**
-
 - Build
 
   ```shell
-      npm install
+  npm install
   ```
 
 - Execute
 
   ```shell
-    npm start
+  npm start
   ```
