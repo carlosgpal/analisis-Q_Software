@@ -4,6 +4,7 @@ export interface Node extends SimulationNodeDatum {
     id: string;
     name: string;
     file: string;
+    code: string;
     labels: string[];
 }
 

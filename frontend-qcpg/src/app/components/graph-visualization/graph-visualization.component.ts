@@ -139,8 +139,8 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     });
 
     const calculateLinkArcPath = (d: Link) => {
-      const source: Node = typeof d.source === 'string' ? { id: d.source, name: '', labels: [], file: '' } : d.source;
-      const target: Node = typeof d.target === 'string' ? { id: d.target, name: '', labels: [], file: '' } : d.target;
+      const source: Node = typeof d.source === 'string' ? { id: d.source, name: '', labels: [], file: '', code: '' } : d.source;
+      const target: Node = typeof d.target === 'string' ? { id: d.target, name: '', labels: [], file: '', code: '' } : d.target;
       const sourceId = source.id;
       const targetId = target.id;
       const edgeKey = sourceId < targetId ? `${sourceId}:${targetId}` : `${targetId}:${sourceId}`;
@@ -386,7 +386,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     );
 
     node.on("dblclick", (event, d) => {
-      this.showPopup('node', `<strong>Nombre:</strong> ${d.name}<br><strong>Archivo:</strong> ${d.file}<br><strong>Etiquetas:</strong> ${d.labels.join(', ')}`, event.pageX, event.pageY);
+      this.showPopup('node', `<strong>Nombre:</strong> ${d.name}<br><strong>Archivo:</strong> ${d.file}<br><strong>Código:</strong> ${d.code}<br><strong>Etiquetas:</strong> ${d.labels.join(', ')}`, event.pageX, event.pageY);
     });
 
     link.on("dblclick", (event, d) => {
