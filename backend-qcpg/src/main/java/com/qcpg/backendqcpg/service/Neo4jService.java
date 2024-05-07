@@ -5,12 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.qcpg.backendqcpg.dto.BitsResponseDTO;
+import com.qcpg.backendqcpg.dto.GatesResponseDTO;
 import com.qcpg.backendqcpg.dto.GenericGraphDTO;
 import com.qcpg.backendqcpg.dto.GenericNodeDTO;
 import com.qcpg.backendqcpg.dto.GenericRelationshipDTO;
+import com.qcpg.backendqcpg.dto.MeasuresResponseDTO;
 import com.qcpg.backendqcpg.model.GenericNode;
 import com.qcpg.backendqcpg.model.GenericRelationship;
 import com.qcpg.backendqcpg.repository.GenericNodeRepository;
@@ -25,7 +32,6 @@ public class Neo4jService {
         private ModelMapper modelMapper;
 
         public GenericGraphDTO getGraph() {
-                // Conjuntos para almacenar nodos y aristas únicos
                 List<GenericNode> allNodes = new ArrayList<>();
                 List<GenericRelationship> allEdges = new ArrayList<>();
 
@@ -220,4 +226,132 @@ public class Neo4jService {
 
                 return new GenericGraphDTO(nodeDTOs, edgeDTOs, "mappingMeasures");
         }
+
+        public List<BitsResponseDTO> getMoreInfoQubitsBits() {
+                GenericGraphDTO graph = getMappingBits();
+
+                Map<String, GenericNodeDTO> nodesById = graph.getNodes().stream()
+                                .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
+
+                Map<String, Set<String>> qubitToBits = new HashMap<>();
+
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        String sourceId = edge.getSource();
+                        String targetId = edge.getTarget();
+
+                        if (nodesById.get(sourceId).getLabels().contains("QuantumBitReference") &&
+                                        nodesById.get(targetId).getLabels().contains("ClassicBitReference")) {
+                                Set<String> bits = qubitToBits.computeIfAbsent(nodesById.get(sourceId).getName(),
+                                                k -> new HashSet<>());
+                                bits.add(nodesById.get(targetId).getName());
+                        }
+                }
+
+                List<BitsResponseDTO> response = qubitToBits.entrySet().stream()
+                                .map(entry -> new BitsResponseDTO(entry.getKey(), new ArrayList<>(entry.getValue())))
+                                .collect(Collectors.toList());
+
+                return response;
+        }
+
+        public List<GatesResponseDTO> getMoreInfoQubitsGates() {
+                GenericGraphDTO graph = getMappingGates();
+
+                Map<String, GenericNodeDTO> nodesById = graph.getNodes().stream()
+                                .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
+
+                Map<String, GatesResponseDTO> gatesCount = new HashMap<>();
+                int totalX = 0, totalH = 0, totalCX = 0;
+
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        String sourceId = edge.getSource();
+                        String targetId = edge.getTarget();
+
+                        if (nodesById.get(sourceId).getLabels().contains("QuantumBit")) {
+                                GenericNodeDTO gateNode = nodesById.get(targetId);
+                                if (gateNode != null && gateNode.getLabels().stream()
+                                                .anyMatch(label -> label.contains("QuantumGate"))) {
+                                        GatesResponseDTO count = gatesCount.computeIfAbsent(
+                                                        nodesById.get(sourceId).getName(),
+                                                        k -> new GatesResponseDTO(k, 0, 0, 0));
+
+                                        if (gateNode.getLabels().contains("QuantumGateX")) {
+                                                count.setGatesX(count.getGatesX() + 1);
+                                                totalX++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateH")) {
+                                                count.setGatesH(count.getGatesH() + 1);
+                                                totalH++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateCX")) {
+                                                count.setGatesCX(count.getGatesCX() + 1);
+                                                totalCX++;
+                                        }
+                                }
+                        }
+                }
+
+                gatesCount.put("ALL", new GatesResponseDTO("ALL", totalX, totalH, totalCX));
+
+                return new ArrayList<>(gatesCount.values());
+        }
+
+        public List<MeasuresResponseDTO> getMoreInfoQubitsMeasures() {
+                GenericGraphDTO graph = getMappingMeasures();
+
+                // Mapear nodos por ID para fácil acceso
+                Map<String, GenericNodeDTO> nodesById = graph.getNodes().stream()
+                                .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
+
+                List<MeasuresResponseDTO> measuresList = new ArrayList<>();
+                int idCounter = 1;
+
+                for (GenericNodeDTO node : graph.getNodes()) {
+                        if (node.getLabels().contains("CallExpression") && node.getName().contains("measure")) {
+                                String fileType = node.getFile().endsWith(".py") ? "python" : "qasm";
+                                List<String> qubits = new ArrayList<>();
+                                List<String> classicBits = new ArrayList<>();
+
+                                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                                        if (edge.getSource().equals(node.getId())) {
+                                                GenericNodeDTO targetNode = nodesById.get(edge.getTarget());
+                                                if (fileType.equals("python")) {
+                                                        if (targetNode.getLabels()
+                                                                        .contains("InitializerListExpression")) {
+                                                                List<String> items = parseInitializerList(
+                                                                                targetNode.getCode());
+                                                                if (qubits.isEmpty()) {
+                                                                        qubits = items;
+                                                                } else {
+                                                                        classicBits = items;
+                                                                }
+                                                        }
+                                                } else {
+                                                        if (targetNode.getName().startsWith("q[")) {
+                                                                qubits.add(targetNode.getName());
+                                                        } else if (targetNode.getName().startsWith("c[")) {
+                                                                classicBits.add(targetNode.getName());
+                                                        }
+                                                }
+                                        }
+                                }
+
+                                for (int i = 0; i < qubits.size() && i < classicBits.size(); i++) {
+                                        measuresList.add(new MeasuresResponseDTO(String.valueOf(idCounter++),
+                                                        qubits.get(i), classicBits.get(i)));
+                                }
+                        }
+                }
+
+                return measuresList;
+        }
+
+        private List<String> parseInitializerList(String code) {
+                List<String> results = new ArrayList<>();
+                String stripped = code.replaceAll("[\\[\\]]", "");
+                String[] parts = stripped.split(",\\s*");
+                for (String part : parts) {
+                        results.add("q[" + part.trim() + "]");
+                }
+                return results;
+        }
+
 }

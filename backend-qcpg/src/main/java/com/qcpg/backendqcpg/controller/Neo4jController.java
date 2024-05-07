@@ -67,4 +67,19 @@ public class Neo4jController {
     public ResponseEntity<?> getMappingMeasures() {
         return ResponseEntity.ok(neo4jService.getMappingMeasures());
     }
+
+    @GetMapping("/moreInfoQubitsBits")
+    public ResponseEntity<?> getMoreInfoQubitsBits() {
+        return ResponseEntity.ok(neo4jService.getMoreInfoQubitsBits());
+    }
+
+    @GetMapping("/moreInfoQubitsGates")
+    public ResponseEntity<?> getMoreInfoQubitsGates() {
+        return ResponseEntity.ok(neo4jService.getMoreInfoQubitsGates());
+    }
+
+    @GetMapping("/moreInfoQubitsMeasures")
+    public ResponseEntity<?> getMoreInfoQubitsMeasures() {
+        return ResponseEntity.ok(neo4jService.getMoreInfoQubitsMeasures());
+    }
 }
