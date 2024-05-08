@@ -1,6 +1,12 @@
 <div class="analysis-container">
   <div class="graph-context">
     Este grafo muestra el mapeo de variables clásicas con respecto a los cúbits
+    <app-metric-card
+      title="Número de bits clásicos"
+      [value]="numClassicBits"
+      route="/mappingBits"
+      [showArrowButton]="false"
+    ></app-metric-card>
   </div>
 
   <div class="graph-container">

@@ -13,10 +13,12 @@ export class MetricCardComponent {
   @Input() title: string;
   @Input() value: string;
   @Input() route: string;
+  @Input() showArrowButton: boolean;
 
   constructor() {
     this.title = '';
     this.value = '';
     this.route = '';
+    this.showArrowButton = false;
   }
 }

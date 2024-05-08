@@ -30,3 +30,10 @@ export interface GraphCache {
     mappingGates?: Graph;
     mappingMeasures?: Graph;
 }
+
+export interface File {
+    id: number;
+    name: string;
+    content: string;
+    open?: boolean;
+}

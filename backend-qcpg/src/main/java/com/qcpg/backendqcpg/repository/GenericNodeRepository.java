@@ -90,4 +90,10 @@ public interface GenericNodeRepository extends Neo4jRepository<GenericNode, Long
                         "WHERE id(sourceNode) IN $selectedNodeIds AND id(targetNode) IN $selectedNodeIds\r\n" +
                         "RETURN id(r) AS id, type(r) AS type, id(sourceNode) AS sourceNodeId, id(targetNode) AS targetNodeId")
         List<GenericRelationship> getMappingMeasuresRelationships(List<Long> selectedNodeIds);
+
+        @Query("MATCH (n)\r\n" +
+                        "WHERE n.file IS NOT NULL\r\n" +
+                        "WITH n.file AS file, COLLECT(n)[0] AS node\r\n" +
+                        "RETURN id(node) AS id, node.fullName AS fullName, node.file AS file, node.code AS code, labels(node) AS labels")
+        List<GenericNode> getFiles();
 }

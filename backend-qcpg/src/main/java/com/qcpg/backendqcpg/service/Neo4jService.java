@@ -2,8 +2,13 @@ package com.qcpg.backendqcpg.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.qcpg.backendqcpg.dto.BitsResponseDTO;
+import com.qcpg.backendqcpg.dto.FilesResponseDTO;
 import com.qcpg.backendqcpg.dto.GatesResponseDTO;
 import com.qcpg.backendqcpg.dto.GenericGraphDTO;
 import com.qcpg.backendqcpg.dto.GenericNodeDTO;
@@ -24,6 +30,9 @@ import com.qcpg.backendqcpg.repository.GenericNodeRepository;
 
 @Service
 public class Neo4jService {
+
+        @Value("${custom.cpg.volumes}")
+        private String cpgVolumes;
 
         @Autowired
         private GenericNodeRepository nodeRepository;
@@ -297,7 +306,6 @@ public class Neo4jService {
         public List<MeasuresResponseDTO> getMoreInfoQubitsMeasures() {
                 GenericGraphDTO graph = getMappingMeasures();
 
-                // Mapear nodos por ID para fácil acceso
                 Map<String, GenericNodeDTO> nodesById = graph.getNodes().stream()
                                 .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
 
@@ -354,4 +362,35 @@ public class Neo4jService {
                 return results;
         }
 
+        public List<FilesResponseDTO> getFiles() {
+                List<GenericNode> nodes = nodeRepository.getFiles();
+                List<FilesResponseDTO> files = new ArrayList<>();
+
+                for (GenericNode node : nodes) {
+                        FilesResponseDTO dto = new FilesResponseDTO();
+                        dto.setId(node.getId().longValue());
+
+                        String fullPath = node.getFile();
+                        String fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+                        dto.setName(fileName);
+
+                        String contentPath = fullPath.replace("/app/uploads", cpgVolumes);
+                        String fileContent = "";
+
+                        fileContent = loadFileContent(contentPath);
+                        dto.setContent(fileContent);
+
+                        files.add(dto);
+                }
+
+                return files;
+        }
+
+        private String loadFileContent(String filePath) {
+                try {
+                        return new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                        return "Error reading file";
+                }
+        }
 }

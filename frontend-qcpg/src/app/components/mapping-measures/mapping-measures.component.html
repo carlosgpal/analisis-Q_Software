@@ -2,6 +2,12 @@
   <div class="graph-context">
     Este grafo muestra el mapeo de las measures cuánticas con respecto a los
     cúbits y variables clásicas
+    <app-metric-card
+      title="Número de medidas"
+      [value]="numMeasures"
+      route="/mappingMeasures"
+      [showArrowButton]="false"
+    ></app-metric-card>
   </div>
 
   <div class="graph-container">

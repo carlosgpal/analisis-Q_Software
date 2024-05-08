@@ -2,6 +2,12 @@
   <div class="graph-context">
     Este grafo muestra el mapeo de las puertas cuánticas con respecto a los
     cúbits a los que afecta
+    <app-metric-card
+      title="Número de puertas"
+      [value]="numGates"
+      route="/mappingGates"
+      [showArrowButton]="false"
+    ></app-metric-card>
   </div>
 
   <div class="graph-container">

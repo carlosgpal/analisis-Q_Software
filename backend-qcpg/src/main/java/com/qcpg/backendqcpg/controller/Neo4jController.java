@@ -82,4 +82,9 @@ public class Neo4jController {
     public ResponseEntity<?> getMoreInfoQubitsMeasures() {
         return ResponseEntity.ok(neo4jService.getMoreInfoQubitsMeasures());
     }
+
+    @GetMapping("/getFiles")
+    public ResponseEntity<?> getFiles() {
+        return ResponseEntity.ok(neo4jService.getFiles());
+    }
 }
