@@ -36,4 +36,5 @@ export interface File {
     name: string;
     content: string;
     open?: boolean;
+    isExpanded?: boolean;
 }

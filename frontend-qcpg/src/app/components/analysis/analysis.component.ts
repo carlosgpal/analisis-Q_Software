@@ -6,11 +6,12 @@ import { ApiCallsService } from '@app/shared/services/apicalls.service';
 import { CommonModule } from '@angular/common';
 import { File } from '@app/models/graph.models';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-analysis',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule],
+  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule, MatIconModule],
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css']
 })
@@ -24,6 +25,7 @@ export class AnalysisComponent implements OnInit {
 
   sidebarExpanded: boolean = false;
   files: File[] = [];
+  isSidenavOpen: boolean = false;
 
   constructor(private apiCallsService: ApiCallsService) { }
 
@@ -60,7 +62,6 @@ export class AnalysisComponent implements OnInit {
       },
       error: (error) => console.error('Error fetching numMeasures:', error)
     });
-
   }
 
   loadFiles() {
@@ -77,5 +78,14 @@ export class AnalysisComponent implements OnInit {
 
   toggleFile(file: File) {
     file.open = !file.open;
+  }
+
+  toggleExpand(file: File) {
+    file.open = !file.open;
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+    this.isSidenavOpen = !this.isSidenavOpen;
   }
 }

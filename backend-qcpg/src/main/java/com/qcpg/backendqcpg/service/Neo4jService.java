@@ -374,7 +374,14 @@ public class Neo4jService {
                         String fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
                         dto.setName(fileName);
 
-                        String contentPath = fullPath.replace("/app/uploads", cpgVolumes);
+                        String contentPath;
+
+                        if (fullPath.contains("/app/uploads")) {
+                                contentPath = fullPath.replace("/app/uploads", cpgVolumes);
+                        } else {
+                                contentPath = cpgVolumes + "/" + fullPath;
+                        }
+
                         String fileContent = "";
 
                         fileContent = loadFileContent(contentPath);

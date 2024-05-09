@@ -1,43 +1,61 @@
 <div class="wrapper">
+  <div
+    class="sidenav-toggle"
+    [style.right]="isSidenavOpen ? '15%' : '0'"
+    (click)="toggleSidenav()"
+  >
+    <button mat-icon-button class="toggle-button">
+      <mat-icon>{{
+        isSidenavOpen ? "chevron_right" : "chevron_left"
+      }}</mat-icon>
+    </button>
+  </div>
   <mat-sidenav-container
     class="example-container"
     style="width: 100%; height: 100%"
   >
     <mat-sidenav #sidenav mode="side" opened="false" position="end">
       <div *ngFor="let file of files" class="file-entry">
-        <h4 (click)="toggleFile(file)">{{ file.name }}</h4>
-        <pre *ngIf="file.open" class="file-content">{{ file.content }}</pre>
+        <div class="control">
+          <h4 (click)="toggleFile(file)">{{ file.name }}</h4>
+          <mat-icon (click)="toggleExpand(file)" class="expand-icon">
+            {{ file.isExpanded ? "expand_less" : "expand_more" }}
+          </mat-icon>
+        </div>
+        <div>
+          <pre *ngIf="file.open" class="file-content">{{ file.content }}</pre>
+          <div *ngIf="file.isExpanded" class="expanded-content"></div>
+        </div>
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="analysis-container">
         <div class="metrics-container">
           <app-metric-card
-            title="Número de cúbits"
+            title="Cúbits"
             [value]="numQubits"
             route="/mappingBits"
             [showArrowButton]="false"
           ></app-metric-card>
           <app-metric-card
-            title="Número de bits clásicos"
+            title="Bits clásicos"
             [value]="numClassicBits"
             route="/mappingBits"
             [showArrowButton]="true"
           ></app-metric-card>
           <app-metric-card
-            title="Número de puertas"
+            title="Puertas"
             [value]="numGates"
             route="/mappingGates"
             [showArrowButton]="true"
           ></app-metric-card>
           <app-metric-card
-            title="Número de medidas"
+            title="Medidas"
             [value]="numMeasures"
             route="/mappingMeasures"
             [showArrowButton]="true"
           ></app-metric-card>
         </div>
-
         <div class="graph-container">
           <app-graph-visualization></app-graph-visualization>
           <app-graph-controls></app-graph-controls>
@@ -46,7 +64,3 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-
-<button type="button" (click)="sidenav.toggle()" class="toggle-button">
-  O
-</button>

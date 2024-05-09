@@ -38,6 +38,7 @@ public class CpgControllerTests {
 
     @Test
     public void testExecuteCommandFailure() throws Exception {
+        String expectedOutput = "Execute processing error";
         Mockito.when(cpgService.executeCpgCommand(Mockito.anyString()))
                 .thenThrow(new RuntimeException("Failed to execute command"));
 
@@ -45,6 +46,6 @@ public class CpgControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"command\":\"testCommand\"}"))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().string(containsString("Execute processing error")));
+                .andExpect(content().string(containsString(expectedOutput)));
     }
 }

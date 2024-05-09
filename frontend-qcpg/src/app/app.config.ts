@@ -6,8 +6,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule, BrowserAnimationsModule, MatSidenavModule,
+  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule, BrowserAnimationsModule, MatSidenavModule, MatIconModule,
     MatListModule), provideAnimationsAsync(), provideAnimationsAsync()]
 };
