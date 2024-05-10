@@ -1,0 +1,26 @@
+.qubits-info-container {
+  background-color: rgb(42, 47, 64);
+  border: 1px solid rgb(62, 67, 87);
+  border-radius: 4px;
+  margin: 10px;
+  padding: 16px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qubits-info-title {
+  color: rgb(189, 198, 255);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.qubits-info-content {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.mat-icon {
+  color: rgb(189, 198, 255);
+}

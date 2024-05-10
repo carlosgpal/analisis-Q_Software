@@ -40,16 +40,16 @@ export class ApiCallsService {
     return this.http.get(`${this.baseUrl}/neo4j/numMeasures`);
   }
 
-  getMoreInfoQubitsBits() {
-    return this.http.get(`${this.baseUrl}/neo4j/moreInfoQubitsBits`);
+  getMoreInfoQubitsBits(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/neo4j/moreInfoQubitsBits`);
   }
 
-  getMoreInfoQubitsGates() {
-    return this.http.get(`${this.baseUrl}/neo4j/moreInfoQubitsGates`);
+  getMoreInfoQubitsGates(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/neo4j/moreInfoQubitsGates`);
   }
 
-  getMoreInfoQubitsMeasures() {
-    return this.http.get(`${this.baseUrl}/neo4j/moreInfoQubitsMeasures`);
+  getMoreInfoQubitsMeasures(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/neo4j/moreInfoQubitsMeasures`);
   }
 
   getFiles(): Observable<File[]> {

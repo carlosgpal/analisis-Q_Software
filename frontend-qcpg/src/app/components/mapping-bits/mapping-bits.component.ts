@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { File } from '@app/models/graph.models';
 import { MatIconModule } from '@angular/material/icon';
+import { MoreInfoBitsComponent } from '../more-info-bits/more-info-bits.component';
 
 @Component({
   selector: 'app-mapping-bits',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoBitsComponent],
   templateUrl: './mapping-bits.component.html',
   styleUrl: './mapping-bits.component.css'
 })

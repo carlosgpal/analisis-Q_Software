@@ -1,0 +1,15 @@
+<div class="qubits-info-container">
+  <div *ngFor="let gateInfo of qubitsGates">
+    <h3 class="qubits-info-title" (click)="toggleExpand(gateInfo)">
+      {{ gateInfo.id }}
+      <mat-icon>{{
+        gateInfo.isExpanded ? "expand_less" : "expand_more"
+      }}</mat-icon>
+    </h3>
+    <div class="qubits-info-content" *ngIf="gateInfo.isExpanded">
+      <p>Puertas X: {{ gateInfo.gatesX }}</p>
+      <p>Puertas H: {{ gateInfo.gatesH }}</p>
+      <p>Puertas CX: {{ gateInfo.gatesCX }}</p>
+    </div>
+  </div>
+</div>

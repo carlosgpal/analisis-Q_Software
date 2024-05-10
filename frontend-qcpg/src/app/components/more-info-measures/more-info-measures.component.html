@@ -1,0 +1,19 @@
+<div class="qubits-info-container">
+  <div *ngFor="let key of objectKeys(groupedMeasures)">
+    <h3 class="qubits-info-title" (click)="toggleExpand(key)">
+      Bit clásico: {{ key }}
+      <mat-icon>
+        {{ groupedMeasures[key].isExpanded ? "expand_less" : "expand_more" }}
+      </mat-icon>
+    </h3>
+    <div *ngIf="groupedMeasures[key].isExpanded">
+      <ul>
+        <div class="qubits-info-content">
+          <li *ngFor="let measure of groupedMeasures[key].measures">
+            Cúbit: {{ measure.qubit }}
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -6,11 +6,12 @@ import { File } from '@app/models/graph.models';
 import { CommonModule } from '@angular/common';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { MoreInfoGatesComponent } from '../more-info-gates/more-info-gates.component';
 
 @Component({
   selector: 'app-mapping-gates',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoGatesComponent],
   templateUrl: './mapping-gates.component.html',
   styleUrl: './mapping-gates.component.css'
 })

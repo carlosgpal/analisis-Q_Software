@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { File } from '@app/models/graph.models';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { MoreInfoMeasuresComponent } from '../more-info-measures/more-info-measures.component';
 
 @Component({
   selector: 'app-mapping-measures',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoMeasuresComponent],
   templateUrl: './mapping-measures.component.html',
   styleUrl: './mapping-measures.component.css'
 })

@@ -38,3 +38,18 @@ export interface File {
     open?: boolean;
     isExpanded?: boolean;
 }
+
+export interface Measure {
+    id: string;
+    qubit: string;
+    classicBit: string;
+}
+
+export interface Group {
+    measures: Measure[];
+    isExpanded: boolean;
+}
+
+export interface GroupedMeasures {
+    [key: string]: Group;
+}

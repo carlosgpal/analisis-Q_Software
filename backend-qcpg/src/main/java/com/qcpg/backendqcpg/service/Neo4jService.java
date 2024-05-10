@@ -298,7 +298,7 @@ public class Neo4jService {
                         }
                 }
 
-                gatesCount.put("ALL", new GatesResponseDTO("ALL", totalX, totalH, totalCX));
+                gatesCount.put("ALL", new GatesResponseDTO("TODAS", totalX, totalH, totalCX / 2));
 
                 return new ArrayList<>(gatesCount.values());
         }
