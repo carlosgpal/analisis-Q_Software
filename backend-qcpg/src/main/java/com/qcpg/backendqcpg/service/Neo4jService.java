@@ -270,7 +270,8 @@ public class Neo4jService {
                                 .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
 
                 Map<String, GatesResponseDTO> gatesCount = new HashMap<>();
-                int totalX = 0, totalH = 0, totalCX = 0;
+                int totalX = 0, totalY = 0, totalZ = 0, totalH = 0, totalCX = 0, totalT = 0, totalS = 0, totalTDG = 0,
+                                totalSDG = 0;
 
                 for (GenericRelationshipDTO edge : graph.getEdges()) {
                         String sourceId = edge.getSource();
@@ -282,23 +283,44 @@ public class Neo4jService {
                                                 .anyMatch(label -> label.contains("QuantumGate"))) {
                                         GatesResponseDTO count = gatesCount.computeIfAbsent(
                                                         nodesById.get(sourceId).getName(),
-                                                        k -> new GatesResponseDTO(k, 0, 0, 0));
+                                                        k -> new GatesResponseDTO(k, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 
                                         if (gateNode.getLabels().contains("QuantumGateX")) {
                                                 count.setGatesX(count.getGatesX() + 1);
                                                 totalX++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateY")) {
+                                                count.setGatesY(count.getGatesY() + 1);
+                                                totalY++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateZ")) {
+                                                count.setGatesZ(count.getGatesZ() + 1);
+                                                totalZ++;
                                         } else if (gateNode.getLabels().contains("QuantumGateH")) {
                                                 count.setGatesH(count.getGatesH() + 1);
                                                 totalH++;
                                         } else if (gateNode.getLabels().contains("QuantumGateCX")) {
                                                 count.setGatesCX(count.getGatesCX() + 1);
                                                 totalCX++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateT")) {
+                                                count.setGatesT(count.getGatesT() + 1);
+                                                totalT++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateS")) {
+                                                count.setGatesS(count.getGatesS() + 1);
+                                                totalS++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateTdg")) {
+                                                count.setGatesTDG(count.getGatesTDG() + 1);
+                                                totalTDG++;
+                                        } else if (gateNode.getLabels().contains("QuantumGateSdg")) {
+                                                count.setGatesSDG(count.getGatesSDG() + 1);
+                                                totalSDG++;
                                         }
                                 }
                         }
                 }
 
-                gatesCount.put("ALL", new GatesResponseDTO("TODAS", totalX, totalH, totalCX / 2));
+                gatesCount.put("ALL",
+                                new GatesResponseDTO("TODAS", totalX, totalY, totalZ, totalH, totalCX / 2, totalT,
+                                                totalS, totalTDG,
+                                                totalSDG));
 
                 return new ArrayList<>(gatesCount.values());
         }

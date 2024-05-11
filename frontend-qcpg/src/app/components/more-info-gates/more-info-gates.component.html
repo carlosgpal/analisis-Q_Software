@@ -7,9 +7,19 @@
       }}</mat-icon>
     </h3>
     <div class="qubits-info-content" *ngIf="gateInfo.isExpanded">
-      <p>Puertas X: {{ gateInfo.gatesX }}</p>
-      <p>Puertas H: {{ gateInfo.gatesH }}</p>
-      <p>Puertas CX: {{ gateInfo.gatesCX }}</p>
+      <p *ngIf="gateInfo.gatesX !== 0">Puertas X: {{ gateInfo.gatesX }}</p>
+      <p *ngIf="gateInfo.gatesY !== 0">Puertas Y: {{ gateInfo.gatesY }}</p>
+      <p *ngIf="gateInfo.gatesZ !== 0">Puertas Z: {{ gateInfo.gatesZ }}</p>
+      <p *ngIf="gateInfo.gatesH !== 0">Puertas H: {{ gateInfo.gatesH }}</p>
+      <p *ngIf="gateInfo.gatesCX !== 0">Puertas CX: {{ gateInfo.gatesCX }}</p>
+      <p *ngIf="gateInfo.gatesT !== 0">Puertas T: {{ gateInfo.gatesT }}</p>
+      <p *ngIf="gateInfo.gatesS !== 0">Puertas S: {{ gateInfo.gatesS }}</p>
+      <p *ngIf="gateInfo.gatesTDG !== 0">
+        Puertas TDG: {{ gateInfo.gatesTDG }}
+      </p>
+      <p *ngIf="gateInfo.gatesSDG !== 0">
+        Puertas SDG: {{ gateInfo.gatesSDG }}
+      </p>
     </div>
   </div>
 </div>

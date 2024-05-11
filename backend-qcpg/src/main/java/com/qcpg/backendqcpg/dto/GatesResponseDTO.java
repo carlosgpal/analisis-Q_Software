@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 public class GatesResponseDTO {
     private String id;
     private int gatesX;
+    private int gatesY;
+    private int gatesZ;
     private int gatesH;
     private int gatesCX;
+    private int gatesT;
+    private int gatesS;
+    private int gatesTDG;
+    private int gatesSDG;
 }
