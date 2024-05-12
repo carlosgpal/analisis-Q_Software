@@ -40,4 +40,46 @@ public class Neo4jServiceTests {
         assertThat(result.getNodes()).hasSize(1);
         assertThat(result.getEdges()).hasSize(0);
     }
+
+    @Test
+    public void testGetAst() {
+        GenericNode mockNode = new GenericNode();
+        mockNode.setId(1L);
+        Mockito.when(nodeRepository.getAstNodes()).thenReturn(Collections.singletonList(mockNode));
+        Mockito.when(nodeRepository.getAstRelationships(any())).thenReturn(Collections.emptyList());
+        Mockito.when(modelMapper.map(any(GenericNode.class), any())).thenReturn(new GenericNodeDTO());
+
+        GenericGraphDTO result = neo4jService.getAst();
+
+        assertThat(result.getNodes()).hasSize(1);
+        assertThat(result.getEdges()).isEmpty();
+    }
+
+    @Test
+    public void testGetCfg() {
+        GenericNode mockNode = new GenericNode();
+        mockNode.setId(1L);
+        Mockito.when(nodeRepository.getCfgNodes()).thenReturn(Collections.singletonList(mockNode));
+        Mockito.when(nodeRepository.getCfgRelationships(any())).thenReturn(Collections.emptyList());
+        Mockito.when(modelMapper.map(any(GenericNode.class), any())).thenReturn(new GenericNodeDTO());
+
+        GenericGraphDTO result = neo4jService.getCfg();
+
+        assertThat(result.getNodes()).hasSize(1);
+        assertThat(result.getEdges()).isEmpty();
+    }
+
+    @Test
+    public void testGetPdg() {
+        GenericNode mockNode = new GenericNode();
+        mockNode.setId(1L);
+        Mockito.when(nodeRepository.getPdgNodes()).thenReturn(Collections.singletonList(mockNode));
+        Mockito.when(nodeRepository.getPdgRelationships(any())).thenReturn(Collections.emptyList());
+        Mockito.when(modelMapper.map(any(GenericNode.class), any())).thenReturn(new GenericNodeDTO());
+
+        GenericGraphDTO result = neo4jService.getPdg();
+
+        assertThat(result.getNodes()).hasSize(1);
+        assertThat(result.getEdges()).isEmpty();
+    }
 }
