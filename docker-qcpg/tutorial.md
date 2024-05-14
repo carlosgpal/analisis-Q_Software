@@ -20,7 +20,7 @@ This tutorial guides you through the process of building a Docker container that
 
    - Pull the image from the Docker repository using the command:
      ```shell
-      docker pull carlosgpal02/cpg-image:2.0
+      docker pull carlosgpal02/cpg-image:5.0
      ```
 
 3. **Build the Container**:

@@ -82,4 +82,32 @@ public class Neo4jServiceTests {
         assertThat(result.getNodes()).hasSize(1);
         assertThat(result.getEdges()).isEmpty();
     }
+
+    @Test
+    public void testGetNumQubits() {
+        Mockito.when(nodeRepository.getNumQubits()).thenReturn(Collections.nCopies(5, new GenericNode()));
+        int result = neo4jService.getNumQubits();
+        assertThat(result).isEqualTo(5);
+    }
+
+    @Test
+    public void testGetNumClassicBits() {
+        Mockito.when(nodeRepository.getNumClassicBits()).thenReturn(Collections.nCopies(3, new GenericNode()));
+        int result = neo4jService.getNumClassicBits();
+        assertThat(result).isEqualTo(3);
+    }
+
+    @Test
+    public void testGetMappingBits() {
+        GenericNode mockNode = new GenericNode();
+        mockNode.setId(1L);
+        Mockito.when(nodeRepository.getMappingBitsNodes()).thenReturn(Collections.singletonList(mockNode));
+        Mockito.when(nodeRepository.getMappingBitsRelationships(any())).thenReturn(Collections.emptyList());
+        Mockito.when(modelMapper.map(any(GenericNode.class), any())).thenReturn(new GenericNodeDTO());
+
+        GenericGraphDTO result = neo4jService.getMappingBits();
+
+        assertThat(result.getNodes()).hasSize(1);
+        assertThat(result.getEdges()).isEmpty();
+    }
 }
