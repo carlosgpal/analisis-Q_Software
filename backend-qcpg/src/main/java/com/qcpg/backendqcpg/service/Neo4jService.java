@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.qcpg.backendqcpg.dto.BitsResponseDTO;
+import com.qcpg.backendqcpg.dto.EntanglementDTO;
 import com.qcpg.backendqcpg.dto.FilesResponseDTO;
 import com.qcpg.backendqcpg.dto.GatesResponseDTO;
 import com.qcpg.backendqcpg.dto.GenericGraphDTO;
@@ -82,7 +83,6 @@ public class Neo4jService {
                 List<Long> nodeIds = nodes.stream()
                                 .map(GenericNode::getId)
                                 .collect(Collectors.toList());
-                System.out.println(nodeIds);
                 List<GenericRelationship> edges = nodeRepository.getAstRelationships(nodeIds);
 
                 List<GenericNodeDTO> nodeDTOs = nodes.stream()
@@ -421,5 +421,109 @@ public class Neo4jService {
                 } catch (IOException e) {
                         return "Error reading file";
                 }
+        }
+
+        public GenericGraphDTO getStatePreparation() {
+                List<GenericNode> nodes = nodeRepository.getStatePreparationNodes();
+                List<Long> nodeIds = nodes.stream()
+                                .map(GenericNode::getId)
+                                .collect(Collectors.toList());
+                List<GenericRelationship> edges = nodeRepository.getStatePreparationRelationships(nodeIds);
+
+                List<GenericNodeDTO> nodeDTOs = nodes.stream()
+                                .map(node -> modelMapper.map(node, GenericNodeDTO.class))
+                                .collect(Collectors.toList());
+
+                List<GenericRelationshipDTO> edgeDTOs = edges.stream()
+                                .map(edge -> modelMapper.map(edge, GenericRelationshipDTO.class))
+                                .collect(Collectors.toList());
+
+                edgeDTOs.forEach(edgeDTO -> {
+                        edgeDTO.setSource(edgeDTO.getSource().toString());
+                        edgeDTO.setTarget(edgeDTO.getTarget().toString());
+                });
+
+                return new GenericGraphDTO(nodeDTOs, edgeDTOs, "statePreparation");
+        }
+
+        public GenericGraphDTO getUniformSuperposition() {
+                List<GenericNode> nodes = nodeRepository.getUniformSuperpositionNodes();
+                List<Long> nodeIds = nodes.stream()
+                                .map(GenericNode::getId)
+                                .collect(Collectors.toList());
+                List<GenericRelationship> edges = nodeRepository.getUniformSuperpositionRelationships(nodeIds);
+
+                List<GenericNodeDTO> nodeDTOs = nodes.stream()
+                                .map(node -> modelMapper.map(node, GenericNodeDTO.class))
+                                .collect(Collectors.toList());
+
+                List<GenericRelationshipDTO> edgeDTOs = edges.stream()
+                                .map(edge -> modelMapper.map(edge, GenericRelationshipDTO.class))
+                                .collect(Collectors.toList());
+
+                edgeDTOs.forEach(edgeDTO -> {
+                        edgeDTO.setSource(edgeDTO.getSource().toString());
+                        edgeDTO.setTarget(edgeDTO.getTarget().toString());
+                });
+
+                return new GenericGraphDTO(nodeDTOs, edgeDTOs, "uniformSuperposition");
+        }
+
+        public GenericGraphDTO getCreatingEntanglement() {
+                List<GenericNode> nodes = nodeRepository.getCreatingEntanglementNodes();
+                List<Long> nodeIds = nodes.stream()
+                                .map(GenericNode::getId)
+                                .collect(Collectors.toList());
+                List<GenericRelationship> edges = nodeRepository.getCreatingEntanglementRelationships(nodeIds);
+
+                List<GenericNodeDTO> nodeDTOs = nodes.stream()
+                                .map(node -> modelMapper.map(node, GenericNodeDTO.class))
+                                .collect(Collectors.toList());
+
+                List<GenericRelationshipDTO> edgeDTOs = edges.stream()
+                                .map(edge -> modelMapper.map(edge, GenericRelationshipDTO.class))
+                                .collect(Collectors.toList());
+
+                edgeDTOs.forEach(edgeDTO -> {
+                        edgeDTO.setSource(edgeDTO.getSource().toString());
+                        edgeDTO.setTarget(edgeDTO.getTarget().toString());
+                });
+
+                return new GenericGraphDTO(nodeDTOs, edgeDTOs, "creatingEntanglement");
+        }
+
+        public List<EntanglementDTO> getMoreInfoCreatingEntanglement() {
+                GenericGraphDTO graph = getCreatingEntanglement();
+                List<EntanglementDTO> entanglementDTOs = new ArrayList<>();
+                Map<String, String> nodeMappings = new HashMap<>();
+
+                for (GenericNodeDTO node : graph.getNodes()) {
+                        nodeMappings.put(node.getId(), node.getName());
+                }
+
+                Map<String, String> quBit1Targets = new HashMap<>();
+
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        if (edge.getType().equals("QU_BIT_1")) {
+                                quBit1Targets.put(edge.getSource(), edge.getTarget());
+                        }
+                }
+
+                long idCounter = 0;
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        if (edge.getType().equals("QU_BIT_0")) {
+                                String qb1TargetId = edge.getTarget();
+                                String qb1 = nodeMappings.get(qb1TargetId);
+
+                                String qb2TargetId = quBit1Targets.get(edge.getSource());
+                                String qb2 = nodeMappings.get(qb2TargetId);
+
+                                if (qb1 != null && qb2 != null) {
+                                        entanglementDTOs.add(new EntanglementDTO(idCounter++, qb1, qb2));
+                                }
+                        }
+                }
+
+                return entanglementDTOs;
         }
 }
