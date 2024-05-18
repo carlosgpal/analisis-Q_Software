@@ -12,7 +12,7 @@ export class ApiCallsService {
 
   constructor(private http: HttpClient) { }
 
-  getGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures'): Observable<any> {
+  getGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures' | 'statePreparation' | 'uniformSuperposition' | 'creatingEntanglement'): Observable<any> {
     return this.http.get(`${this.baseUrl}/neo4j/${graphType}`);
   }
 
@@ -38,6 +38,10 @@ export class ApiCallsService {
 
   getNumMeasures() {
     return this.http.get(`${this.baseUrl}/neo4j/numMeasures`);
+  }
+
+  getNumPatterns() {
+    return this.http.get(`${this.baseUrl}/neo4j/getNumPatterns`);
   }
 
   getMoreInfoQubitsBits(): Observable<any[]> {

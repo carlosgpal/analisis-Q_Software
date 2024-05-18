@@ -111,7 +111,9 @@ public interface GenericNodeRepository extends Neo4jRepository<GenericNode, Long
                         "  AND NOT EXISTS ((:QuantumGate)-[:EOG]->(start))\r\n" +
                         "WITH path, qbsInitX + nodes(path) AS allNodes\r\n" +
                         "UNWIND allNodes AS node\r\n" +
-                        "RETURN DISTINCT id(node) AS id, node.name AS name, node.file AS file, node.code AS code, labels(node) AS labels")
+                        "WITH DISTINCT node\r\n" +
+                        "WHERE 'QuantumGateX' IN labels(node) OR 'QuantumBit' IN labels(node)\r\n" +
+                        "RETURN id(node) AS id, node.fullName AS fullName, node.file AS file, node.code AS code, labels(node) AS labels")
         List<GenericNode> getStatePreparationNodes();
 
         @Query("MATCH (sourceNode)-[r:(RELEVANT_FOR_GATES|EOG)]->(targetNode)\r\n" +
@@ -133,7 +135,9 @@ public interface GenericNodeRepository extends Neo4jRepository<GenericNode, Long
                         "  AND NOT EXISTS ((:QuantumGate)-[:EOG]->(start))\r\n" +
                         "WITH path, qbsInitH + nodes(path) AS allNodes\r\n" +
                         "UNWIND allNodes AS node\r\n" +
-                        "RETURN DISTINCT id(node) AS id, node.name AS name, node.file AS file, node.code AS code, labels(node) AS labels")
+                        "WITH DISTINCT node\r\n" +
+                        "WHERE 'QuantumGateH' IN labels(node) OR 'QuantumBit' IN labels(node)\r\n" +
+                        "RETURN id(node) AS id, node.fullName AS fullName, node.file AS file, node.code AS code, labels(node) AS labels")
         List<GenericNode> getUniformSuperpositionNodes();
 
         @Query("MATCH (sourceNode)-[r:(RELEVANT_FOR_GATES|EOG)]->(targetNode)\r\n" +

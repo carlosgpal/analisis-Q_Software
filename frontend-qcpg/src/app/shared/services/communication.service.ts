@@ -9,7 +9,7 @@ export class GraphCommunicationService {
 
   graphType$ = this.graphTypeSource.asObservable();
 
-  changeGraphType(type: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures'): void {
+  changeGraphType(type: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures' | 'statePreparation' | 'uniformSuperposition' | 'creatingEntanglement'): void {
     this.graphTypeSource.next(type);
   }
 }

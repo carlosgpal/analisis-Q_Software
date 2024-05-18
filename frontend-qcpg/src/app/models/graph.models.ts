@@ -29,6 +29,9 @@ export interface GraphCache {
     mappingBits?: Graph;
     mappingGates?: Graph;
     mappingMeasures?: Graph;
+    statePreparation?: Graph;
+    uniformSuperposition?: Graph;
+    creatingEntanglement?: Graph;
 }
 
 export interface File {

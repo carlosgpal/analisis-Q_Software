@@ -1,0 +1,18 @@
+<div class="pattern-card">
+  <h3 class="pattern-title">{{ title }}</h3>
+  <p class="pattern-value">{{ value }}</p>
+  <div *ngIf="showPopupButton && value !== '0'">
+    <button class="btn-popup" aria-label="Open" (click)="togglePopup()">
+      <mat-icon>{{ isOpen ? "chevron_right" : "chevron_right" }}</mat-icon>
+    </button>
+    <div *ngIf="isOpen" class="popup-menu">
+      <a
+        *ngFor="let pattern of patterns"
+        [href]="pattern.route"
+        class="popup-item"
+      >
+        {{ pattern.title }}
+      </a>
+    </div>
+  </div>
+</div>

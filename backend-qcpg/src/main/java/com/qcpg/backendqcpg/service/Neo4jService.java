@@ -25,6 +25,7 @@ import com.qcpg.backendqcpg.dto.GenericGraphDTO;
 import com.qcpg.backendqcpg.dto.GenericNodeDTO;
 import com.qcpg.backendqcpg.dto.GenericRelationshipDTO;
 import com.qcpg.backendqcpg.dto.MeasuresResponseDTO;
+import com.qcpg.backendqcpg.dto.NumPatternsDTO;
 import com.qcpg.backendqcpg.model.GenericNode;
 import com.qcpg.backendqcpg.model.GenericRelationship;
 import com.qcpg.backendqcpg.repository.GenericNodeRepository;
@@ -421,6 +422,42 @@ public class Neo4jService {
                 } catch (IOException e) {
                         return "Error reading file";
                 }
+        }
+
+        public NumPatternsDTO getNumPatterns() {
+                int statePreparation = 0;
+                int uniformSuperposition = 0;
+                int creatingEntanglement = 0;
+
+                if (!nodeRepository.getStatePreparationNodes().isEmpty()) {
+                        statePreparation++;
+                }
+
+                if (!nodeRepository.getUniformSuperpositionNodes().isEmpty()) {
+                        uniformSuperposition++;
+                }
+
+                GenericGraphDTO graph = getCreatingEntanglement();
+                Map<String, String> nodeMappings = new HashMap<>();
+
+                for (GenericNodeDTO node : graph.getNodes()) {
+                        nodeMappings.put(node.getId(), node.getName());
+                }
+
+                Map<String, String> quBit1Targets = new HashMap<>();
+
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        if (edge.getType().equals("QU_BIT_1")) {
+                                quBit1Targets.put(edge.getSource(), edge.getTarget());
+                        }
+                }
+
+                for (GenericRelationshipDTO edge : graph.getEdges()) {
+                        if (edge.getType().equals("QU_BIT_0")) {
+                                creatingEntanglement++;
+                        }
+                }
+                return new NumPatternsDTO(statePreparation, uniformSuperposition, creatingEntanglement);
         }
 
         public GenericGraphDTO getStatePreparation() {

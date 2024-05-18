@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { File } from '@app/models/graph.models';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { PatternCardComponent } from '@app/modules/pattern-card/pattern-card.component';
 
 @Component({
   selector: 'app-analysis',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule, MatIconModule, PatternCardComponent],
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css']
 })
@@ -22,6 +23,8 @@ export class AnalysisComponent implements OnInit {
   numClassicBits!: string;
   numGates!: string;
   numMeasures!: string;
+  numPatterns!: string;
+  patterns: { title: string, route: string }[] = [];
 
   sidebarExpanded: boolean = false;
   files: File[] = [];
@@ -61,6 +64,19 @@ export class AnalysisComponent implements OnInit {
         this.numMeasures = data.toString();
       },
       error: (error) => console.error('Error fetching numMeasures:', error)
+    });
+
+    this.apiCallsService.getNumPatterns().subscribe({
+      next: (data: Object) => {
+        this.patterns = Object.entries(data)
+          .filter(([_, count]) => count > 0)
+          .map(([title, count]) => ({
+            title: `${title} (${count})`,
+            route: `/pattern/${title.toLowerCase()}`
+          }));
+        this.numPatterns = Object.values(data).reduce((total, current) => total + current, 0).toString();
+      },
+      error: (error) => console.error('Error fetching pattern data:', error)
     });
   }
 

@@ -88,17 +88,22 @@ public class Neo4jController {
         return ResponseEntity.ok(neo4jService.getFiles());
     }
 
-    @GetMapping("/getStatePreparation")
+    @GetMapping("/getNumPatterns")
+    public ResponseEntity<?> getNumPatterns() {
+        return ResponseEntity.ok(neo4jService.getNumPatterns());
+    }
+
+    @GetMapping("/statePreparation")
     public ResponseEntity<?> getStatePreparation() {
         return ResponseEntity.ok(neo4jService.getStatePreparation());
     }
 
-    @GetMapping("/getUniformSuperposition")
+    @GetMapping("/uniformSuperposition")
     public ResponseEntity<?> getUniformSuperposition() {
         return ResponseEntity.ok(neo4jService.getUniformSuperposition());
     }
 
-    @GetMapping("/getCreatingEntanglement")
+    @GetMapping("/creatingEntanglement")
     public ResponseEntity<?> getCreatingEntanglement() {
         return ResponseEntity.ok(neo4jService.getCreatingEntanglement());
     }

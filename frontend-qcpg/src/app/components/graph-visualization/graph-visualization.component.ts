@@ -30,7 +30,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.initializeSVG();
 
     const url = this.router.url;
-    let graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures';
+    let graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures' | 'statePreparation' | 'uniformSuperposition' | 'creatingEntanglement';
 
     if (url.includes('/mappingBits')) {
       graphType = 'mappingBits';
@@ -38,6 +38,13 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
       graphType = 'mappingGates';
     } else if (url.includes('/mappingMeasures')) {
       graphType = 'mappingMeasures';
+    }
+    else if (url.includes('/pattern/statepreparation')) {
+      graphType = 'statePreparation';
+    } else if (url.includes('/pattern/uniformsuperposition')) {
+      graphType = 'uniformSuperposition';
+    } else if (url.includes('/pattern/creatingentanglement')) {
+      graphType = 'creatingEntanglement';
     }
     else {
       graphType = 'entireGraph';
@@ -50,7 +57,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.initializeZoom();
     this.graphCommService.graphType$.subscribe({
       next: (graphType) => {
-        if (graphType === 'entireGraph' || graphType === 'ast' || graphType === 'cfg' || graphType === 'pdg' || graphType === 'mappingBits' || graphType === 'mappingGates' || graphType === 'mappingMeasures') {
+        if (graphType === 'entireGraph' || graphType === 'ast' || graphType === 'cfg' || graphType === 'pdg' || graphType === 'mappingBits' || graphType === 'mappingGates' || graphType === 'mappingMeasures' || graphType === 'statePreparation' || graphType === 'uniformSuperposition' || graphType === 'creatingEntanglement') {
           this.loadGraph(graphType);
         } else {
           console.error('Tipo de grafo no válido:', graphType);
@@ -89,7 +96,7 @@ export class GraphVisualizationComponent implements OnInit, AfterViewInit {
     this.svg.select('g').attr('transform', event.transform.toString());
   }
 
-  loadGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures'): void {
+  loadGraph(graphType: 'entireGraph' | 'ast' | 'cfg' | 'pdg' | 'mappingBits' | 'mappingGates' | 'mappingMeasures' | 'statePreparation' | 'uniformSuperposition' | 'creatingEntanglement'): void {
     if (this.graphDataCache[graphType]) {
       this.createGraph(this.graphDataCache[graphType]);
     } else {

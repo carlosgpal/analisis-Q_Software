@@ -30,41 +30,9 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="analysis-container">
-        <div class="metrics-container">
-          <app-metric-card
-            title="Cúbits"
-            [value]="numQubits"
-            route="/mappingBits"
-            [showArrowButton]="false"
-          ></app-metric-card>
-          <app-metric-card
-            title="Bits clásicos"
-            [value]="numClassicBits"
-            route="/mappingBits"
-            [showArrowButton]="true"
-          ></app-metric-card>
-          <app-metric-card
-            title="Puertas"
-            [value]="numGates"
-            route="/mappingGates"
-            [showArrowButton]="true"
-          ></app-metric-card>
-          <app-metric-card
-            title="Medidas"
-            [value]="numMeasures"
-            route="/mappingMeasures"
-            [showArrowButton]="true"
-          ></app-metric-card>
-          <app-pattern-card
-            title="Patrones"
-            [value]="numPatterns"
-            [patterns]="patterns"
-            [showPopupButton]="true"
-          ></app-pattern-card>
-        </div>
+        <div class="metrics-container"></div>
         <div class="graph-container">
           <app-graph-visualization></app-graph-visualization>
-          <app-graph-controls></app-graph-controls>
         </div>
       </div>
     </mat-sidenav-content>
