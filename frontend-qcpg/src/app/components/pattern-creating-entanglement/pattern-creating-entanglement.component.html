@@ -30,9 +30,24 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="analysis-container">
-        <div class="metrics-container"></div>
+        <div class="metrics-container">
+          <p>
+            <strong><em>Creating Entanglement</em></strong> es un patrón entre 2
+            cúbits que implica que al medir ambos después del patrón, el
+            resultado será el mismo. |0⟩, |0⟩ o |1⟩, |1⟩.
+          </p>
+          <p>
+            Esto se logra con una puerta H al primer cúbit y una puerta CNOT del
+            primer al segundo cúbit.
+          </p>
+          <app-moreinfo-creating-entanglement></app-moreinfo-creating-entanglement>
+        </div>
         <div class="graph-container">
           <app-graph-visualization></app-graph-visualization>
+          <img
+            src="../../../assets/images/Creating-Entanglement.png"
+            alt="Visualización de Creating Entanglement"
+          />
         </div>
       </div>
     </mat-sidenav-content>

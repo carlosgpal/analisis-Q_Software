@@ -1,0 +1,15 @@
+<div class="qubits-info-container">
+  <div *ngFor="let qubit of qubitsBits">
+    <h3 class="qubits-info-title" (click)="toggleExpand(qubit)">
+      Patrón {{ qubit.id }}
+      <mat-icon>{{
+        qubit.isExpanded ? "expand_less" : "expand_more"
+      }}</mat-icon>
+    </h3>
+    <ul *ngIf="qubit.isExpanded">
+      <div class="qubits-info-content">
+        {{ qubit.qb1 }} &rarr; {{ qubit.qb2 }}
+      </div>
+    </ul>
+  </div>
+</div>

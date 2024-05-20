@@ -5,11 +5,12 @@ import { GraphVisualizationComponent } from '../graph-visualization/graph-visual
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { File } from '@app/models/graph.models';
+import { MoreinfoCreatingEntanglementComponent } from '../moreinfo-creating-entanglement/moreinfo-creating-entanglement.component';
 
 @Component({
   selector: 'app-pattern-creating-entanglement',
   standalone: true,
-  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreinfoCreatingEntanglementComponent],
   templateUrl: './pattern-creating-entanglement.component.html',
   styleUrl: './pattern-creating-entanglement.component.css'
 })

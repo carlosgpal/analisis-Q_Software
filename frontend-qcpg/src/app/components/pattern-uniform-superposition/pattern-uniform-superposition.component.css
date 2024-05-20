@@ -137,3 +137,8 @@ mat-sidenav {
   display: flex;
   flex-direction: row;
 }
+
+.metrics-container {
+  color: white;
+  text-align: justify;
+}

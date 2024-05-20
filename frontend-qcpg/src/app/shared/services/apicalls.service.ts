@@ -59,4 +59,8 @@ export class ApiCallsService {
   getFiles(): Observable<File[]> {
     return this.http.get<File[]>(`${this.baseUrl}/neo4j/getFiles`);
   }
+
+  getMoreInfoCreatingEntanglement(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/neo4j/moreInfoCreatingEntanglement`);
+  }
 } 

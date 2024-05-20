@@ -546,7 +546,7 @@ public class Neo4jService {
                         }
                 }
 
-                long idCounter = 0;
+                long idCounter = 1;
                 for (GenericRelationshipDTO edge : graph.getEdges()) {
                         if (edge.getType().equals("QU_BIT_0")) {
                                 String qb1TargetId = edge.getTarget();

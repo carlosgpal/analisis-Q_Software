@@ -30,9 +30,24 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="analysis-container">
-        <div class="metrics-container"></div>
+        <div class="metrics-container">
+          <p>
+            <strong><em>Uniform Superposition</em></strong> es un patrón que
+            implica que al principio de un circuito cuántico, todos los cúbits
+            están en superposición (50% de probabilidad entre el estado |0⟩ y
+            |1⟩).
+          </p>
+          <p>
+            Para identificar este patrón se detecta que al principio del
+            circuito todos los qubits tienen una puerta H.
+          </p>
+        </div>
         <div class="graph-container">
           <app-graph-visualization></app-graph-visualization>
+          <img
+            src="../../../assets/images/Uniform-Superposition.png"
+            alt="Visualización de Uniform Superposition"
+          />
         </div>
       </div>
     </mat-sidenav-content>
