@@ -48,4 +48,11 @@ public class CpgControllerTests {
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().string(containsString(expectedOutput)));
     }
+
+    @Test
+    public void testFileUploadWithEmptyFilesArray() throws Exception {
+        mockMvc.perform(post("/cpg/upload")
+                .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isBadRequest());
+    }
 }

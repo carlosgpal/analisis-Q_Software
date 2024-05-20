@@ -12,6 +12,9 @@ import com.qcpg.backendqcpg.service.Neo4jService;
 import org.mockito.Mockito;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import org.junit.jupiter.api.Test;
@@ -34,5 +37,25 @@ public class Neo4jControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$").exists());
+    }
+
+    @Test
+    public void testGetEntireGraphEmpty() throws Exception {
+        GenericGraphDTO emptyGraph = new GenericGraphDTO(new ArrayList<>(), new ArrayList<>(), "emptyGraph");
+        Mockito.when(neo4jService.getGraph()).thenReturn(emptyGraph);
+
+        mockMvc.perform(get("/neo4j/entireGraph"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.nodes").isEmpty())
+                .andExpect(jsonPath("$.edges").isEmpty());
+    }
+
+    @Test
+    public void testGetNumGates() throws Exception {
+        Mockito.when(neo4jService.getNumGates()).thenReturn(10);
+        mockMvc.perform(get("/neo4j/numGates"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("10"));
     }
 }
