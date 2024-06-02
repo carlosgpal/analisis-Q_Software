@@ -8,11 +8,12 @@ import { File } from '@app/models/graph.models';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { PatternCardComponent } from '@app/modules/pattern-card/pattern-card.component';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-analysis',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule, MatIconModule, PatternCardComponent],
+  imports: [MetricCardComponent, GraphVisualizationComponent, GraphControlsComponent, CommonModule, MatSidenavModule, MatIconModule, PatternCardComponent, HighlightJsDirective],
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css']
 })

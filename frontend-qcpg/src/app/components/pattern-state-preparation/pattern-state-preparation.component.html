@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div
     class="sidenav-toggle"
-    [style.right]="isSidenavOpen ? '15%' : '0'"
+    [style.right]="isSidenavOpen ? '30%' : '0'"
     (click)="toggleSidenav()"
   >
     <button mat-icon-button class="toggle-button">
@@ -23,7 +23,12 @@
           </mat-icon>
         </div>
         <div>
-          <pre *ngIf="file.open" class="file-content">{{ file.content }}</pre>
+          <pre
+            *ngIf="file.open"
+            class="file-content"
+          ><textarea highlight-js [options]="{}" [lang]="'python'" wrap="true">
+          {{ file.content }}
+          </textarea></pre>
           <div *ngIf="file.isExpanded" class="expanded-content"></div>
         </div>
       </div>
@@ -31,16 +36,19 @@
     <mat-sidenav-content>
       <div class="analysis-container">
         <div class="metrics-container">
-          <p>
-            <strong><em>State Preparation</em></strong> es un patrón que implica
-            que al principio de un circuito cuántico, todos los cúbits están en
-            el mismo estado. En general los circuitos empiezan en el estado |0⟩
-          </p>
-          <p>
-            Para identificar este patrón se detecta que al principio del
-            circuito todos los qubits tienen una puerta X, siendo el estado
-            final |1⟩ para todos.
-          </p>
+          <div class="info">
+            <p>
+              <strong><em>State Preparation</em></strong> es un patrón que
+              implica que al principio de un circuito cuántico, todos los cúbits
+              están en el mismo estado. En general los circuitos empiezan en el
+              estado |0⟩
+            </p>
+            <p>
+              Para identificar este patrón se detecta que al principio del
+              circuito todos los cúbits tienen una puerta X, siendo el estado
+              final |1⟩ para todos.
+            </p>
+          </div>
         </div>
         <div class="graph-container">
           <app-graph-visualization></app-graph-visualization>

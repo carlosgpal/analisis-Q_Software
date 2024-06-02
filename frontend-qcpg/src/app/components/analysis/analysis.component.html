@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div
     class="sidenav-toggle"
-    [style.right]="isSidenavOpen ? '15%' : '0'"
+    [style.right]="isSidenavOpen ? '30%' : '0'"
     (click)="toggleSidenav()"
   >
     <button mat-icon-button class="toggle-button">
@@ -23,7 +23,12 @@
           </mat-icon>
         </div>
         <div>
-          <pre *ngIf="file.open" class="file-content">{{ file.content }}</pre>
+          <pre
+            *ngIf="file.open"
+            class="file-content"
+          ><textarea highlight-js [options]="{}" [lang]="'python'" wrap="true">
+            {{ file.content }}
+            </textarea></pre>
           <div *ngIf="file.isExpanded" class="expanded-content"></div>
         </div>
       </div>

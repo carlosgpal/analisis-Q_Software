@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { File } from '@app/models/graph.models';
 import { MoreinfoCreatingEntanglementComponent } from '../moreinfo-creating-entanglement/moreinfo-creating-entanglement.component';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-pattern-creating-entanglement',
   standalone: true,
-  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreinfoCreatingEntanglementComponent],
+  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreinfoCreatingEntanglementComponent, HighlightJsDirective],
   templateUrl: './pattern-creating-entanglement.component.html',
   styleUrl: './pattern-creating-entanglement.component.css'
 })

@@ -5,11 +5,12 @@ import { GraphVisualizationComponent } from '../graph-visualization/graph-visual
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { File } from '@app/models/graph.models';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-pattern-uniform-superposition',
   standalone: true,
-  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, HighlightJsDirective],
   templateUrl: './pattern-uniform-superposition.component.html',
   styleUrl: './pattern-uniform-superposition.component.css'
 })

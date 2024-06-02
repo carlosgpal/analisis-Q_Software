@@ -5,11 +5,12 @@ import { ApiCallsService } from '@app/shared/services/apicalls.service';
 import { GraphVisualizationComponent } from '../graph-visualization/graph-visualization.component';
 import { MatIconModule } from '@angular/material/icon';
 import { File } from '@app/models/graph.models';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-pattern-state-preparation',
   standalone: true,
-  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule],
+  imports: [CommonModule, MatSidenav, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, HighlightJsDirective],
   templateUrl: './pattern-state-preparation.component.html',
   styleUrl: './pattern-state-preparation.component.css'
 })

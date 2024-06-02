@@ -7,11 +7,12 @@ import { File } from '@app/models/graph.models';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MoreInfoMeasuresComponent } from '../more-info-measures/more-info-measures.component';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-mapping-measures',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoMeasuresComponent],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoMeasuresComponent, HighlightJsDirective],
   templateUrl: './mapping-measures.component.html',
   styleUrl: './mapping-measures.component.css'
 })

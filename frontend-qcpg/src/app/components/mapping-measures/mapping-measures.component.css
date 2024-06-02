@@ -48,8 +48,8 @@
 }
 
 mat-sidenav {
-  width: 15%;
-  background-color: rgb(42, 47, 64);
+  width: 30%;
+  background-color: #282c34;
   border: 1px solid rgb(62, 67, 87);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;

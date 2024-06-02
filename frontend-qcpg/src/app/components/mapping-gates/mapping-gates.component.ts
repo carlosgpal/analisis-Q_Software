@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MoreInfoGatesComponent } from '../more-info-gates/more-info-gates.component';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-mapping-gates',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoGatesComponent],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoGatesComponent, HighlightJsDirective],
   templateUrl: './mapping-gates.component.html',
   styleUrl: './mapping-gates.component.css'
 })

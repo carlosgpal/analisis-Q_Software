@@ -7,11 +7,12 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { File } from '@app/models/graph.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MoreInfoBitsComponent } from '../more-info-bits/more-info-bits.component';
+import { HighlightJsDirective } from 'ngx-highlight-js';
 
 @Component({
   selector: 'app-mapping-bits',
   standalone: true,
-  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoBitsComponent],
+  imports: [MetricCardComponent, GraphVisualizationComponent, CommonModule, MatSidenavModule, MatIconModule, MoreInfoBitsComponent, HighlightJsDirective],
   templateUrl: './mapping-bits.component.html',
   styleUrl: './mapping-bits.component.css'
 })

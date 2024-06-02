@@ -10,11 +10,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import com.qcpg.backendqcpg.dto.BitsResponseDTO;
@@ -258,6 +260,7 @@ public class Neo4jService {
                 }
 
                 List<BitsResponseDTO> response = qubitToBits.entrySet().stream()
+                                .sorted(Map.Entry.comparingByKey())
                                 .map(entry -> new BitsResponseDTO(entry.getKey(), new ArrayList<>(entry.getValue())))
                                 .collect(Collectors.toList());
 
@@ -270,7 +273,7 @@ public class Neo4jService {
                 Map<String, GenericNodeDTO> nodesById = graph.getNodes().stream()
                                 .collect(Collectors.toMap(GenericNodeDTO::getId, node -> node));
 
-                Map<String, GatesResponseDTO> gatesCount = new HashMap<>();
+                Map<String, GatesResponseDTO> gatesCount = new TreeMap<>();
                 int totalX = 0, totalY = 0, totalZ = 0, totalH = 0, totalCX = 0, totalT = 0, totalS = 0, totalTDG = 0,
                                 totalSDG = 0;
 
@@ -372,7 +375,10 @@ public class Neo4jService {
                         }
                 }
 
-                return measuresList;
+                return measuresList.stream()
+                                .sorted(Comparator.comparing(m -> Integer
+                                                .parseInt(m.getQubit().substring(2, m.getQubit().length() - 1))))
+                                .collect(Collectors.toList());
         }
 
         private List<String> parseInitializerList(String code) {
