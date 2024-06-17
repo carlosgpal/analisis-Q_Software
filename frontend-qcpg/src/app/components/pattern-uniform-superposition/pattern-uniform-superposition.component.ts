@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { ApiCallsService } from '@app/shared/services/apicalls.service';
 import { GraphVisualizationComponent } from '../graph-visualization/graph-visualization.component';
@@ -19,7 +19,7 @@ export class PatternUniformSuperpositionComponent {
 
   numClassicBits!: string;
 
-  constructor(private apiCallsService: ApiCallsService) { }
+  constructor(private apiCallsService: ApiCallsService, private renderer: Renderer2) { }
 
   sidebarExpanded: boolean = false;
   files: File[] = [];
@@ -62,5 +62,14 @@ export class PatternUniformSuperpositionComponent {
   toggleSidenav() {
     this.sidenav.toggle();
     this.isSidenavOpen = !this.isSidenavOpen;
+    const graphVisualization = document.querySelector('app-graph-visualization');
+
+    if (this.isSidenavOpen) {
+      this.renderer.removeClass(graphVisualization, 'graph-visualization-closed');
+      this.renderer.addClass(graphVisualization, 'graph-visualization-open');
+    } else {
+      this.renderer.removeClass(graphVisualization, 'graph-visualization-open');
+      this.renderer.addClass(graphVisualization, 'graph-visualization-closed');
+    }
   }
 }

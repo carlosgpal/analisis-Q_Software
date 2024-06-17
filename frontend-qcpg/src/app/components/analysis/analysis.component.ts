@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Renderer2, OnInit, ViewChild } from '@angular/core';
 import { MetricCardComponent } from '@app/modules/metric-card/metric-card.component';
 import { GraphVisualizationComponent } from '../graph-visualization/graph-visualization.component';
 import { GraphControlsComponent } from '../graph-controls/graph-controls.component';
@@ -31,7 +31,7 @@ export class AnalysisComponent implements OnInit {
   files: File[] = [];
   isSidenavOpen: boolean = false;
 
-  constructor(private apiCallsService: ApiCallsService) { }
+  constructor(private apiCallsService: ApiCallsService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.loadQuantumMetrics();
@@ -104,5 +104,14 @@ export class AnalysisComponent implements OnInit {
   toggleSidenav() {
     this.sidenav.toggle();
     this.isSidenavOpen = !this.isSidenavOpen;
+    const graphVisualization = document.querySelector('app-graph-visualization');
+
+    if (this.isSidenavOpen) {
+      this.renderer.removeClass(graphVisualization, 'graph-visualization-closed');
+      this.renderer.addClass(graphVisualization, 'graph-visualization-open');
+    } else {
+      this.renderer.removeClass(graphVisualization, 'graph-visualization-open');
+      this.renderer.addClass(graphVisualization, 'graph-visualization-closed');
+    }
   }
 }
