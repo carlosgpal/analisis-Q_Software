@@ -20,13 +20,13 @@ Instructions are specified in [tutorial.md](./docker-qcpg/tutorial.md).
 
 ## 3. Frontend
 
-- Build
+- **Build**: Tested for node v18.18.2.
 
   ```shell
   npm install
   ```
 
-- Execute
+- **Execute**
 
   ```shell
   npm start
